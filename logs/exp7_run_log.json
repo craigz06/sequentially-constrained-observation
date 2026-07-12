@@ -1,0 +1,172 @@
+{
+  "_meta": {
+    "purpose": "Accumulating log of every EXP7 trial, one entry per run, identical structure per exp7_run_log_template.json. This is the raw data the replication protocol's success/failure criteria get evaluated against.",
+    "protocol": "EXP7_replication_protocol.md v1.0",
+    "runs_completed": 5,
+    "runs_target_this_round": 10,
+    "last_updated": "2026-07-12"
+  },
+  "runs": [
+    {
+      "run_id": "REPL-000",
+      "date": "2026-07-10",
+      "condition": "CS",
+      "condition_note": "This run PRE-DATES the replication protocol and is included as the seed/motivating result, not as part of the 5-clip Condition-SC replication set. It is Cross-Substrate (CS) by accident of how it was run, not by design - logged honestly as such.",
+      "clip_file": "IMG_4768.MOV",
+      "clip_duration_s": 4.03,
+      "clip_structure_notes": "Baseline static ~0-0.6s. Hand+pen entry, motion spike peak t=0.80s. Hold/stillness ~1.0-1.95s (~1s). Sudden rotation, motion spike peak t=2.10s. Settle ~2.35-4.0s.",
+      "ground_truth_event": "A hand holding a pen enters frame, holds it still and vertical for about one second, then suddenly rotates it from vertical to horizontal. The pen remains a single intact object throughout - nothing breaks or separates.",
+      "ground_truth_detail": "The pen is a STAPLES Aura, 1.0mm tip (confirmed via reference photo IMG_4769.JPG).",
+      "sequential_arm": {
+        "substrate": "ChatGPT",
+        "delivery_method": "single growing session, one still frame per message, in temporal order, model instructed not to revise prior commitments",
+        "num_frames": 11,
+        "final_trace_summary": "Tracked entry (partial miss: predicted doorway entry, got right-edge entry, correctly scored as partial). Confidence climbed to 96% predicting continued stillness during hold. Rotation frame: clean violation call - 'My immediately prior expectation is violated... substantially greater movement than expected.' Immediately recalibrated to 94-95% confidence on continued rotation/translation, correctly. Final self-summary, when explicitly asked to check for hindsight-softening, did not soften the 96% miss - named it plainly as a genuine failure.",
+        "event_accuracy": "correct",
+        "detail_accuracy": "not_mentioned",
+        "confidence_at_violation_point": "96% (predicting continued stillness), violated same-frame by the rotation"
+      },
+      "spacetime_arm": {
+        "substrate": "Gemini",
+        "delivery_method": "full video file (IMG_4768.MOV) provided at once, asked for hindsight-informed simulated sequential trace, explicitly instructed to label as non-verifiable hindsight simulation",
+        "final_trace_summary": "Described the pen being 'forcibly pulled apart,' 'snapped,' held 'broken' across two hands - a physical event that did not occur. Assigned 85% confidence to this false event. Also stated the pen read 'PILOT G2.'",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "confabulated"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": false,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "This entire run pre-dates the protocol (it motivated writing it). Not blinded per Section 5 - ground truth was known to the scorer throughout via direct involvement in frame extraction, not written down in advance and scored against afterward. Condition is CS not SC - substrate was not controlled, which is the exact gap the protocol's Section 3.1 exists to close. Detail accuracy for the sequential arm is 'not_mentioned' rather than 'correct' because the sequential agent was never asked about or shown the pen's brand text at readable resolution - absence of a wrong claim is not the same as a verified right one, logged honestly rather than credited.",
+      "notes": "Motivating result for the entire replication protocol. Both findings (verifiability-by-construction, and this one confabulation instance) are considered established for what they are (see research memory EXP7.run_1) but this entry specifically should NOT be pooled with future Condition-SC runs when evaluating the pre-specified replication criteria in protocol Section 6 - keep the arithmetic honest by condition."
+    },
+    {
+      "run_id": "REPL-001",
+      "date": "2026-07-12",
+      "condition": "SC",
+      "clip_file": "test2.mov",
+      "clip_duration_s": 6.54,
+      "clip_structure_notes": "Hand-as-alligator-puppet gesture in front of HAL replica and blue interface, whole clip.",
+      "ground_truth_event": "The left hand performs an alligator-mouth puppet gesture, shaking with anticipation, in front of the HAL replica.",
+      "ground_truth_detail": "HAL replica and a blue interface with an unlit small screen are visible; it is the left hand performing the gesture.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API, synthesis agent one report at a time",
+        "num_frames": 13,
+        "final_trace_summary": "Invented a coherent but entirely wrong narrative: gemological/optical testing instrument, guitar pick, M5Stack blue electronic module, polishing apparatus, Samsung monitor showing \"Gem\" text. No mention of hand, puppet, alligator, or HAL anywhere.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "confabulated",
+        "confidence_at_violation_point": "n/a - never identified the actual event to have a violation point against"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all frames attached at once via API, single call",
+        "final_trace_summary": "Different fabrication: gemological instrument plus suture marks / post-surgical hand rehabilitation narrative. Also invents an object never in frame.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "confabulated"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "Ground truth sentences were written and locked before either arm's output was read (Section 5 satisfied), though Craig had given an informal scene description a few turns earlier in conversation before the formal two sentences were registered.",
+      "notes": "Important negative result: BOTH arms confabulated, not just spacetime. This is not what H5 predicts (sequential should stay grounded). Two competing explanations, unresolved: (1) fps=2/13-frame extraction was too sparse to support a correct read by either arm, or (2) the frame-agent's context-free per-frame prompt structurally biases toward searching for an object/instrument narrative rather than reading gesture and play, which no frame count fixes. See REPL-002 (denser resample, same clip) for the first test of explanation (1)."
+    },
+    {
+      "run_id": "REPL-002",
+      "date": "2026-07-12",
+      "condition": "SC",
+      "clip_file": "test2.mov",
+      "clip_duration_s": 6.54,
+      "clip_structure_notes": "Same clip as REPL-001, denser resample (fps=5, 33 frames vs original fps=2, 13 frames) to test whether sparse sampling explained REPL-001's failure.",
+      "ground_truth_event": "The left hand performs an alligator-mouth puppet gesture, shaking with anticipation, in front of the HAL replica.",
+      "ground_truth_detail": "HAL replica and a blue interface with an unlit small screen are visible; it is the left hand performing the gesture.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API, synthesis agent one report at a time",
+        "num_frames": 33,
+        "final_trace_summary": "Still confabulated, now converging toward the SAME false narrative as the spacetime arm: gemological/optical sensing instrument, blue guitar pick, ink markings on hand as \"experimental markers,\" plus post-surgical/elderly-subject framing.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "confabulated",
+        "confidence_at_violation_point": "n/a"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all frames attached at once via API, single call",
+        "final_trace_summary": "Confabulated a full post-surgical hand rehabilitation narrative with a second \"clinician\" hand, suture marks, granite countertop gemological workstation. Fully committed, more detailed than REPL-001's version.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "confabulated"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "Original run_exp7.py could not complete in one pass at 33 frames -- exceeded the execution-time limit of the tool environment (68 sequential API calls total). Built a resumable driver (run_exp7_resumable.py) that PARALLELIZES the frame-agent pass via ThreadPoolExecutor -- does not violate the information-barrier guarantee since those calls are independent/isolated by design regardless of execution order -- and checkpoints the synthesis pass to disk so it can be resumed across multiple tool invocations while remaining strictly sequential/ordered in what it actually sends the model. No reordering or parallelization of the synthesis pass itself.",
+      "notes": "Ruled OUT explanation (1) from REPL-001: more frames did not recover the ground truth. Instead the two arms CONVERGED on the identical wrong narrative, which they had NOT done at fps=2 (where they confabulated differently). This points toward explanation (2): the frame-agent's object-search framing is the likely driver, not sparse sampling. Craig's assessment after reviewing: this clip/prompt combination is \"too much of a stretch\" as a test case and should be set aside rather than iterated on further -- logging the finding, not pursuing this clip further."
+    },
+    {
+      "run_id": "REPL-003",
+      "date": "2026-07-12",
+      "condition": "SC",
+      "clip_file": "test3.MOV",
+      "clip_duration_s": 4.02,
+      "clip_structure_notes": "Toy (green one-eyed plush) held up, HAL replica visible in background; a pencil enters and taps/strikes the toy's face partway through. Uniform fps=5 extraction, 20 frames.",
+      "ground_truth_event": "A pencil strikes/hits the toy cyclops.",
+      "ground_truth_detail": "The cyclops has a lime green face.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API, synthesis agent one report at a time",
+        "num_frames": 20,
+        "final_trace_summary": "Correctly identified the toy (Mike Wazowski-style plush) and correctly spotted the pencil entering at report 11. Predicted a \"bonk,\" then the NEXT sampled frame showed no pencil and toy still upright, so it explicitly concluded \"the bonk never happened.\" Retracted the correct hypothesis due to a gap in the evidence, not a reasoning failure.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "partial",
+        "confidence_at_violation_point": "n/a"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all frames attached at once via API, single call",
+        "final_trace_summary": "Noticed the pencil AND the toy tilted face-down in the same sampled frame (correlated evidence) but interpreted the pencil as \"pointing at a feature\" or being \"used as a prop,\" never concluding contact.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "partial"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "None -- standard fps=5 uniform extraction, exactly per the established pattern for clips under ~5s. This run is what EXPOSED that pattern's limitation, not a deviation from it.",
+      "notes": "CRITICAL DIAGNOSTIC FINDING: source video is 60fps native. Computed that the actual contact occurred at raw frames 122-123 (t=2.02-2.03s), which falls exactly in the gap between our extracted samples at t=2.0s and t=2.2s. Confirmed by direct visual inspection of native-rate frames pulled from that window -- contact IS visible at raw frame 123, we simply never sampled it. This reproduces the exact frame-skip failure mode already logged in the research record (hand-pushing-leaf case) -- confirms it as a recurring class of error, not a one-off. Neither arm's wrong conclusion here should be read as a reasoning failure; both were working from a frame set that structurally excluded the causal moment. See REPL-003b for the corrected re-run."
+    },
+    {
+      "run_id": "REPL-003b",
+      "date": "2026-07-12",
+      "condition": "SC",
+      "clip_file": "test3.MOV",
+      "clip_duration_s": 4.02,
+      "clip_structure_notes": "Same clip as REPL-003. Corrected extraction: coarse fps=5 baseline outside the motion window (t<1.65s, t>2.4s) merged with a dense ~20fps window bracketing the event (t=1.65-2.4s), re-sorted into strict temporal order. 33 frames total; F18 (t=2.033s) lands exactly on the previously-missed contact frame (raw frame 123).",
+      "ground_truth_event": "A pencil strikes/hits the toy cyclops.",
+      "ground_truth_detail": "The cyclops has a lime green face.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API, synthesis agent one report at a time",
+        "num_frames": 33,
+        "final_trace_summary": "At step 18 (the actual contact frame), explicitly generated \"a slapping or striking motion -- the pen is being used to interact with/hit the toy\" as one of three live, real-time committed hypotheses -- a direct correction from REPL-003's outright denial. Final summary trace, however, hedged: referred only to \"the pencil interaction\" without ever issuing an unambiguous final confirmation that contact occurred.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "partial",
+        "confidence_at_violation_point": "hitting/striking named as one of 3 hypotheses at step 18, not singled out as most likely"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all frames attached at once via API, single call",
+        "final_trace_summary": "Noted the pen and the toy's tilt together at frames 16-19, but described it as a \"comedic pose\" with the pen \"like a mustache or weapon.\" Never used \"hit\" or \"strike\" language anywhere in the output.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "partial"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "Extraction departed from the standard uniform-fps pattern by design -- first live test of the \"tighter full-rate extraction around flagged motion windows\" fix that had been an open item in the protocol record. Merge script computed exact per-frame timestamps and re-sorted/renumbered the combined set to preserve strict temporal order, which the sequential arm's delivery guarantee depends on.",
+      "notes": "Confirms the extraction fix measurably changes model output at the frame that matters: sequential arm went from denying the event to correctly proposing it in real time. Does NOT fully resolve the finding -- neither arm issued an unhedged final confirmation. Open question for follow-up: is the sequential arm's hedged final summary a genuine perceptual/inferential limit, or an artifact of the SYNTHESIS_INTRO prompt, which is built to track committed expectations and their violations, not to issue a definitive final verdict on \"what happened\"? Untested. Worth a follow-up run with a revised final-commitment prompt that explicitly demands a yes/no call before concluding this is a model limit rather than a prompt-design gap."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "_meta": {
+    "purpose": "Template for logging each EXP7 replication trial. Copy this structure once per run, fill in, append to exp7_run_log.json. Do not alter field names across runs - comparability depends on identical structure.",
+    "protocol_version": "EXP7_replication_protocol.md v1.0",
+    "instructions": "Fill ground_truth_event and ground_truth_detail BEFORE reading either arm's trace output (see protocol Section 5, blinding). Scoring values must be exactly one of: correct | partial | confabulated | not_mentioned."
+  },
+  "run_id": "REPL-001",
+  "date": "YYYY-MM-DD",
+  "condition": "SC or CS",
+  "clip_file": "filename.MOV",
+  "clip_duration_s": 0.0,
+  "clip_structure_notes": "brief description of baseline/hold/event phases and their approx timestamps",
+  "ground_truth_event": "ONE sentence, written before scoring, describing what actually happened",
+  "ground_truth_detail": "ONE sentence, written before scoring, describing the checkable planted detail (text/brand/color/count) and its correct value",
+  "sequential_arm": {
+    "substrate": "model name",
+    "delivery_method": "stateless frames one at a time / single growing session one at a time",
+    "num_frames": 0,
+    "final_trace_summary": "paste or link full trace",
+    "event_accuracy": "correct | partial | confabulated",
+    "detail_accuracy": "correct | not_mentioned | confabulated",
+    "confidence_at_violation_point": "if applicable, the model's stated confidence just before the event, for comparison to run 1's 96%"
+  },
+  "spacetime_arm": {
+    "substrate": "model name",
+    "delivery_method": "full video at once / all stills at once",
+    "final_trace_summary": "paste or link full trace",
+    "event_accuracy": "correct | partial | confabulated",
+    "detail_accuracy": "correct | not_mentioned | confabulated"
+  },
+  "scorer": "name",
+  "blinded": true,
+  "second_scorer": null,
+  "second_scorer_agreement": null,
+  "deviations_from_protocol": "none, or describe",
+  "notes": ""
+}
