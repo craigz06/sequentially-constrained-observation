@@ -65,14 +65,31 @@ need it, and stop cleanly at the point that does.
    count, a brand, a gesture). Write both down before extracting a
    single frame. This is the blinding requirement in
    `EXP7_replication_protocol.md` Section 5 — it is not optional.
-3. **Extract frames with ffmpeg.** Check `ffprobe` for duration/fps
-   first. Default pattern: `fps=5` for clips under ~6s, denser for
-   longer ones. If a clip has a fast, discrete event (a strike, a
-   snap, a sudden motion), consider whether uniform sampling might
-   skip the actual event — see REPL-003 in the run log for exactly
-   this failure mode and how it was diagnosed (compute the raw frame
-   number of the event from the source fps, check whether it falls
-   between two sampled frames).
+3. **Extract frames with `pipeline/extract_frames_motion_adaptive.py`,
+   not manual ffmpeg.** This is the default now, not a fallback:
+
+   ```
+   python3 pipeline/extract_frames_motion_adaptive.py \
+       --video clip.mov --out-dir frames_out
+   ```
+
+   It computes a motion-diff profile across the whole clip first
+   (same sigma-threshold pattern as DCI's D7 motion trigger), samples
+   DENSELY inside detected high-motion windows and coarsely everywhere
+   else, and writes a `manifest.json` documenting exactly what was
+   sampled and why. This exists because REPL-003 missed its actual
+   event entirely — uniform `fps=5` sampling landed on either side of
+   a fast pencil-strike, 0.03s wide, and both model arms then failed
+   through no fault of their own. REPL-003b fixed that one clip by
+   hand, after the fact. This script does the same fix automatically,
+   before any model call, for every future clip. Verified against
+   test3.MOV: it independently found the same t≈2.0-2.2s window that
+   manual diagnosis found, no human intervention required.
+
+   Only fall back to plain uniform `ffmpeg -vf fps=N` if a clip
+   genuinely has no discrete fast event (e.g. slow continuous motion
+   throughout) — the script will report "no motion above threshold"
+   and default to uniform baseline sampling in that case anyway.
 4. **Run the pipeline.** For clips producing more than ~15-20 frames,
    use `pipeline/run_exp7_resumable.py` (staged: `stage1` parallel
    frame-agents, `stage2` chunked sequential synthesis, `stage3`
