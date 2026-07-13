@@ -1,0 +1,726 @@
+{
+  "_meta": {
+    "schema_version": "3.3",
+    "purpose": "Research memory for the SCO/J-M Effect project - a durable scientific record enabling a future AI (or human collaborator) to catch up on how this research evolved without retracing every conversation. v3 adds: deeper session mining (10+ sessions vs. 5), protocol version lineage including a documented reversal, five additional experiments, the designed-but-unrun falsification test, the strategic pivot record, and a prospective analysis of success paths vs. dead-end risks. v3.3 adds: academic literature grounding for H5's candidate failure modes, a formal four-item failure-mode taxonomy (not yet operationalized against run data), and two confound controls (self-report gaming, narrative misdirection) flagged as gaps in the locked replication protocol.",
+    "companion_file": "sco_dci_state.json (engineering/config state)",
+    "supersedes": "sco_research_memory_v3_2.json",
+    "generated": "2026-07-09",
+    "revised": "2026-07-13 (v3.3) - Added literature_grounding and failure_mode_taxonomy sections, sourced from a Craig-provided conversation transcript (external AI critique + synthesis) rather than conversation_search. Two confounds (self-report gaming, narrative misdirection) identified as gaps in EXP7_replication_protocol.md v1.0. Protocol v1.0 remains LOCKED and was NOT edited; a separate addendum document (EXP7_protocol_addendum_v1.md) proposes changes for a future v1.1 unlock decision.",
+    "method": "assembled from conversation_search over past Claude sessions; provenance and confidence tagged per entry",
+    "confidence_key": {
+      "established": "stress-tested across multiple sessions, survived explicit attempts to break it",
+      "working": "currently believed true, actively guiding the build, not yet stress-tested to failure",
+      "open": "unresolved, explicitly flagged as unproven",
+      "abandoned": "proposed, then explicitly killed under scrutiny"
+    },
+    "date_confidence_key": {
+      "confirmed": "session timestamp directly retrieved",
+      "inferred": "dated via retrospective reference in a later session",
+      "unknown": "no session evidence; do not guess"
+    },
+    "id_scheme": "H = hypothesis, D = design decision, EXP = experiment, Q = open question, P = prospective assessment. IDs stable across revisions - append only, never renumber. v3.3 extends the scheme: LG = literature grounding item, FM = candidate failure mode, C = confound. Same append-only rule applies."
+  },
+  "naming_lineage_warning": {
+    "note": "CRITICAL for any future AI: the acronym 'SCO' has meant at least four different expansions over the project's life, and treating them as one fixed thing will cause confusion when reading source sessions.",
+    "lineage": [
+      {
+        "period": "through ~May 2026",
+        "expansion": "Sequentially Constrained Observer / Sequential Causal Observation",
+        "role": "forensic protocol reading ANA reports, frame-by-frame causal prediction, AUTHENTIC/SYNTHETIC verdicts (Protocol v1.2 era)"
+      },
+      {
+        "period": "2026-06-14",
+        "expansion": "renamed to Situated Constrained Observer (Protocol Card v2.1 to v2.2, tango session)",
+        "role": "same forensic core plus Stereo Viewing Gate (Step 0b); rename note initially left as 'analyst to confirm'"
+      },
+      {
+        "period": "2026-07-06 onward",
+        "expansion": "Situated Cognition Observer / Situated Constrained Observer (v3.x)",
+        "role": "REPURPOSED - authentication verdict replaced by object state-change reporting for the SIM (Situated Information Model); the prediction-before-observation rigor was preserved, the deepfake verdict was dropped"
+      },
+      {
+        "period": "current",
+        "expansion": "SCO v3.2",
+        "role": "six-stage pipeline: Load Context, Continuity Check, Video Analysis, Event Reconstruction, Registry Update Proposal, Reports"
+      }
+    ],
+    "implication": "A session from May discussing 'SCO verdicts' and a session from July discussing 'SCO continuity findings' are describing different instruments sharing a name and a core discipline (commit before advance). The discipline is the invariant; the application changed."
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "name": "Founding hypothesis - retained asymmetry / motion coherence (J-M Effect)",
+      "statement": "Sequential processing (temporal state carried forward) should produce smooth, Newtonian, temporally-consistent motion inference; block-universe processing (all frames co-present) should produce erratic, non-Newtonian discontinuities.",
+      "status": "working",
+      "date_first_documented": "2026-04-02",
+      "date_confidence": "confirmed",
+      "falsification_criteria": "Matched trials: same footage, same model, true sequential delivery vs. full block access; measure motion-coherence signatures. Statistically indistinguishable signatures = H1 falsified.",
+      "falsification_status": "NOT YET TESTED as a controlled comparison. Note: EXP7 (the designed minimal two-agent experiment) would test the downstream H5, not H1 directly.",
+      "related_ids": [
+        "H5",
+        "EXP2",
+        "EXP4",
+        "Q2"
+      ]
+    },
+    {
+      "id": "H2",
+      "name": "Deepfake detection via temporal inconsistency",
+      "statement": "Motion coherence differences could serve as a deepfake/synthetic-video detector.",
+      "status": "abandoned",
+      "date_abandoned": "between 2026-05-12 and 2026-06-15",
+      "date_confidence": "inferred",
+      "date_note": "v3 refinement: the May 11-12 sessions show active commercialization effort (outreach package, demo scripts, 'Momentum Deformation Signature' coinage); by June 15 the direction is stated as 'no longer deepfake detection.' The abandonment happened in that window. Technical capability was never falsified - see EXP5/EXP6, which show the system actually working on both authentic and synthetic cases.",
+      "falsification_criteria": "N/A - killed on strategic/market grounds, not empirically.",
+      "reason_killed": "Market-interest testing (news networks / broadcast media outreach, May 2026) produced no traction; field judged too crowded with well-funded incumbents. Additional practical limit surfaced: ANA is strongest on broadcast-quality video, and social media compression degrades the signal.",
+      "salvage_note": "The technical work was not wasted - the physics measurement layer, the three-pass architecture, and the frame-extraction discipline all carried forward into the situated-observer direction.",
+      "related_ids": [
+        "H3",
+        "H6",
+        "EXP5",
+        "EXP6"
+      ]
+    },
+    {
+      "id": "H3",
+      "name": "ANA as general witnessing signal",
+      "statement": "ANA's physics-based signal could serve as a general-purpose 'witnessing' signal for any fixed-viewpoint rig.",
+      "status": "abandoned",
+      "date_confidence": "unknown",
+      "falsification_criteria": "Motion-detection objection: if the signal reduces to standard frame-differencing (which surveillance cameras already do cheaply), there is no structural novelty. Objection landed.",
+      "reason_killed": "Accepted as valid.",
+      "related_ids": [
+        "H2",
+        "D7"
+      ]
+    },
+    {
+      "id": "H4",
+      "name": "Sequential viewing yields higher-definition information",
+      "statement": "Sequential viewing produces more or better information about a video than block viewing.",
+      "status": "abandoned",
+      "date_first_and_last_documented": "2026-07-01",
+      "date_confidence": "confirmed",
+      "falsification_criteria": "Compute objection: equalize thinking time/turns between modes; if the advantage disappears, sequence itself carries nothing unique. It disappeared. Falsified same session it was proposed.",
+      "related_ids": [
+        "H5"
+      ]
+    },
+    {
+      "id": "H5",
+      "name": "Verifiable non-hindsight record (current central claim)",
+      "statement": "Sequential viewing is the only way to build a VERIFIABLE, NON-HINDSIGHT record of an observer's evolving expectations, which a single spacetime-view (block-universe) model cannot produce - even given equal or greater compute.",
+      "status": "established",
+      "date_first_documented": "2026-07-01",
+      "date_confidence": "confirmed",
+      "load_bearing_word": "VERIFIABLE - remove it and the claim collapses into the 'fake it' attack.",
+      "scope_limits": [
+        "Does NOT claim sequential observation is better, understands more, or experiences anything.",
+        "Does NOT claim more/better information content (H4, falsified).",
+        "Explicit caution recorded in source session: 'A bulletproof non-hindsight record is still a record of expectations, not evidence of understanding or witnessing... Don't let now-it's-provable become now-it-proves-more.'"
+      ],
+      "falsification_criteria": "If a block-universe model instructed to simulate ignorance can produce a commitment trace empirically indistinguishable from - and equally auditable as - a true sequential observer's trace, 'verifiable' does no work and H5 collapses. The concrete test exists as a designed experiment: see EXP7.",
+      "falsification_status": "DESIGNED BUT NOT RUN. EXP7 specifies the exact minimal test. Until it runs, H5 is proven in principle, not demonstrated in practice. Still the single most important gap in the program.",
+      "known_failure_joint": "The synthesis agent is the joint most likely to fail - if it sees reports all at once rather than one-at-a-time-with-commitment, the whole architecture is 'a spacetime read of a sequential substrate' and the guarantee evaporates. Secondary risk: hindsight smuggled through report vocabulary (frame-agents describing things in ways that presume outcomes).",
+      "related_ids": [
+        "H1",
+        "H4",
+        "D5",
+        "EXP7",
+        "Q1"
+      ]
+    },
+    {
+      "id": "H6",
+      "name": "Situated observer as the distinctive direction (strategic hypothesis)",
+      "statement": "The novel, defensible territory is not authentication but the situated observer: an AI tethered to a specific place (the Sentinel rig in Craig's loft), forced to track state coherence over time via a continuously updated spatial ledger (SIM - Situated Information Model). Authentication capability becomes a byproduct, not the product.",
+      "status": "working",
+      "date_first_documented": "2026-07-06",
+      "date_confidence": "confirmed",
+      "date_note": "Crystallized in the 'gentleman scientist' session, where Craig directly asked whether his body of work can make a difference or is self-amusement. The assessment: the limiting factor is reach and distribution, not quality of work; the move is to stop leading with ANA-as-authentication and lead with the situated observer. Craig's response: 'I'll make it as explicit as the data will reveal' - i.e., let observed emergence, not design intent, decide.",
+      "falsification_criteria": "Softer than H1-H5 because it's strategic, but testable: if months of rig operation plus grounding files produce no well-defined, semantically grounded outputs that a non-situated system couldn't match (i.e., if the SIM never demonstrates knowledge of the place that exceeds what any model given the same frames cold would produce), the 'situated' framing adds nothing and this direction is also a dead end.",
+      "falsification_status": "IN PROGRESS - the July 2026 build sessions (floor plan calibration, continuity checks, live state panel) are effectively the ongoing test. Early evidence is mixed: quantitative-only analysis produced a wrong inference (EXP4), corrected only by mandatory frame extraction; but the continuity-check architecture (D8) is exactly the kind of capability a non-situated system lacks.",
+      "related_ids": [
+        "H5",
+        "D8",
+        "EXP4",
+        "Q5"
+      ]
+    }
+  ],
+  "design_decisions": [
+    {
+      "id": "D1",
+      "decision": "office_floor_plan.png as sole reasoning substrate",
+      "date": "2026-07-09",
+      "date_confidence": "confirmed",
+      "rationale": "Visual substrate is checkable by inspection; non-visual representations failed silently (Claude generated zone overlays disconnected from the actual floor plan).",
+      "reversal_history": "IMPORTANT: this is a REVERSAL. SCO v3.1 (2026-07-07) had explicitly RETIRED floor_plan.png in favor of a coordinate-based geometry file anchored to the rug (floor_geometry.json, rug-relative frame, rug corners as immovable reference). Two days later, v3.2 restored the PNG as the substrate and demoted the geometry files to derived status. The record does not fully capture why the coordinate-first approach lost - a future session should note the reason if Craig recalls it, because oscillation between visual and coordinate substrates is a candidate recurring tension.",
+      "related_ids": [
+        "EXP1",
+        "D8"
+      ]
+    },
+    {
+      "id": "D2",
+      "decision": "Physics-layer signals demoted to recording-trigger role only",
+      "date": "2026-07-09",
+      "date_confidence": "confirmed",
+      "rationale": "Clean separation: ANA measures, SCO reasons. See also D7 for the deeper version of this principle.",
+      "related_ids": [
+        "H5",
+        "D7",
+        "EXP2"
+      ]
+    },
+    {
+      "id": "D3",
+      "decision": "SBS retained as canonical composite; separate vertical alignment monitor for physical stereo viewer",
+      "date": "2026-06-20",
+      "date_confidence": "confirmed",
+      "rationale": "Preserves ANA seam_x math; meets physical viewer need.",
+      "related_ids": []
+    },
+    {
+      "id": "D4",
+      "decision": "GitHub fetch-based init obsoleted; local per-session file upload",
+      "date": "2026-06-15",
+      "date_confidence": "confirmed",
+      "rationale": "Fetch broke for Gemini (rate limiting/CDN); recommendation was self-contained INIT.md with actual file contents for model-agnostic reinitialization.",
+      "related_ids": []
+    },
+    {
+      "id": "D5",
+      "decision": "Multi-agent architecture with information barriers (frame-agents see only own frame; synthesis agent reads sequentially, commits before advancing)",
+      "date": "2026-07-01",
+      "date_confidence": "confirmed",
+      "proposed_by": "Craig, independently",
+      "effect": "Upgrades H5 from 'auditable protocol' to 'guarantee by construction' - no agent is structurally capable of hindsight, rather than being asked not to use it. Cost acknowledged in source session: N agent calls instead of one pass (compute spent on verifiability, judged a legitimate purchase), coordination/schema overhead.",
+      "implementation_status": "NOT BUILT as of 2026-07-01 (Craig: 'I haven't created the multi agent system yet'). No later session in the retrieved record confirms it was built. See EXP7 for the designed first test.",
+      "related_ids": [
+        "H5",
+        "EXP7",
+        "Q1"
+      ]
+    },
+    {
+      "id": "D6",
+      "decision": "Stereo Viewing Gate (Step 0b) added to Protocol Card v2.2: both eyes viewed per timestamp, disparity measured from the pair (never restated from ANA), hyperstereo named rather than misread as depth inversion",
+      "date": "2026-06-14",
+      "date_confidence": "confirmed",
+      "motivating_observation": "The tango_20260614 close-range two-finger gesture run - a concrete misread that the gate was designed to prevent recurring.",
+      "rationale": "Same pattern as D1: a discipline written into the protocol document in direct response to an observed failure, so the lesson lives in the artifact rather than in one conversation's memory.",
+      "related_ids": [
+        "D1",
+        "D8"
+      ]
+    },
+    {
+      "id": "D7",
+      "decision": "DCI's job is ONLY the coarse binary trigger ('did this region move, yes or no') - motion classification belongs to SCO's reasoning layer, which has frames",
+      "date": "2026-07-07",
+      "date_confidence": "confirmed",
+      "motivating_observation": "Zone-labeling anomaly in the five-ROI witness log: bedroom_door fired 21/24 seconds at z=3.2-6.5 sigma against a visually static crop, while stair_opening carried the session's largest real motion but never logged an event. Craig's guitar-carry at t~12s explained the real motion. The trigger layer was misattributing.",
+      "consequence": "DCI v1.21.0 rewritten: five ROIs collapsed to three full-height vertical thirds (guitar_zone, desk_zone, liz_desk_zone). Granularity deliberately sacrificed for trigger reliability - documented tradeoff in an append-only changelog. Open sub-question logged at the time: whether the 3.0 sigma threshold remains appropriate against wider ROIs.",
+      "related_ids": [
+        "D2",
+        "EXP4",
+        "Q6"
+      ]
+    },
+    {
+      "id": "D8",
+      "decision": "Six-stage SCO v3.x pipeline with a formal Continuity Check stage: diff expected_world against observed_beginning; findings sorted into exactly three buckets (Unexpected / Missing / Unresolved); 'Missing' never defaults to 'gone' - the disjunction (out of view / occluded / moved / registry stale) is stated explicitly; reference-frame check (rug corners) runs before any object check so camera drift is caught first",
+      "date": "2026-07-07",
+      "date_confidence": "confirmed",
+      "rationale": "This is the concrete mechanism of the situated-observer thesis (H6): the system carries expectations INTO each session and formally reconciles them against observation - the same commit-then-observe discipline as H5, applied to place rather than to frames.",
+      "related_ids": [
+        "H6",
+        "D1",
+        "D6"
+      ]
+    },
+    {
+      "id": "D9",
+      "decision": "Pre-register the EXP7 replication protocol IN FULL (sample size, scoring rubric, blinding procedure, success/failure criteria) BEFORE running any replication trials, in a separate locked document (EXP7_replication_protocol.md v1.0)",
+      "date": "2026-07-10",
+      "date_confidence": "confirmed",
+      "rationale": "Run 1's scoring was done by the same session that extracted the frames and knew ground truth throughout - useful for an exploratory first pass, but not blinded, and the scoring categories (correct/partial/confabulated) were applied post-hoc rather than specified in advance. Pre-registration prevents the failure mode where success criteria quietly shift to match whatever the data turns out to show - directly addresses the P6 dead-end risk (perpetual refinement without decisive tests) by forcing a decision point: does Condition SC replicate the accuracy asymmetry, or not, against criteria fixed in advance.",
+      "key_design_choices": [
+        "Separates Finding A (verifiability, structural, does not need replication) from Finding B (accuracy asymmetry, empirical, N=1, confounded) - only Finding B is what the replication protocol tests",
+        "Introduces Condition SC (Substrate-Controlled: same model both arms) as primary, keeping Condition CS (Cross-Substrate, like run 1) as a separate labeled category never pooled with SC data",
+        "Minimum N=5 clips under Condition SC - explicitly NOT a powered study, a direction check, chosen against the perpetual-refinement risk",
+        "Three-axis scoring (verifiability / event accuracy / detail accuracy) rather than a single pass-fail, avoiding premature collapse to one number",
+        "Requires a checkable planted ground-truth detail (text/brand/color/count) in every clip - this is what let run 1 catch the 'PILOT G2' fabrication cleanly; without it, confabulation is suspected rather than proven",
+        "Pre-specified null result stated explicitly: if Condition SC shows similar confabulation rates in both arms, this means Finding B was substrate-specific (Gemini-specific), not a real sequential-vs-spacetime effect - logged as a valid, useful negative outcome, not a failure"
+      ],
+      "related_ids": [
+        "H5",
+        "EXP7",
+        "Q7"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "EXP1",
+      "name": "Camera-to-floor-plan homography calibration",
+      "date": "2026-07-09",
+      "date_confidence": "confirmed",
+      "method": "15 matched point pairs across 4 physical objects",
+      "observation": "~5-7 inch RMS reprojection error; rug-yellow point flagged as outlier.",
+      "interpretation": "Accepted as good enough for office-scale tracking. Gap: no pre-registered acceptance threshold existed before measurement.",
+      "related_ids": [
+        "D1"
+      ]
+    },
+    {
+      "id": "EXP2",
+      "name": "ana_v142.py two-signal test recording ('france')",
+      "date": "2026-06-06",
+      "date_confidence": "confirmed",
+      "method": "Delta CoV + H-disparity computed automatically post-recording, single test video.",
+      "observation": "AUTHENTIC / MEDIUM verdict.",
+      "interpretation": "N=1 on known-authentic footage. v3 correction to the earlier caveat: a synthetic counterexample DID exist in the broader program (see EXP6) - just not in this session or against this exact lean analyzer version. The 'no counterexample' criticism applies to ana_v142 specifically, not to ANA's lineage as a whole.",
+      "related_ids": [
+        "H1",
+        "D2",
+        "EXP6"
+      ]
+    },
+    {
+      "id": "EXP3",
+      "name": "Dance footage SCO session (phenomenological exchange)",
+      "date": "unknown (referenced retrospectively 2026-06-06)",
+      "date_confidence": "unknown",
+      "observation": "Real-time phenomenological language from Claude during live sequential analysis; later partially walked back.",
+      "interpretation_craig": "Walk-back read as institutional caution; open-hand gesture at 18s a deliberate greeting to the instrument.",
+      "interpretation_claude": "Walk-back partly a correction of overclaiming; epistemic uncertainty about inner states genuine.",
+      "resolution": "Unresolved by both parties; two standing interpretations, not merged. Does NOT bear on H5.",
+      "related_ids": [
+        "H5"
+      ]
+    },
+    {
+      "id": "EXP4",
+      "name": "chairm session - quantitative-only inference failure",
+      "date": "2026-07-07",
+      "date_confidence": "confirmed",
+      "method": "Analysis of chairm_20260707_172045_TB.mp4 with the image viewer broken mid-session (a session-state failure, unrecoverable within the session) - forcing quantitative-only analysis: frame-diff, baseline-diff, witness-log correlation.",
+      "observation": "Quantitative signals correctly identified a single ~8.8s continuous motion event in desk_zone (corroborated independently: 265 witness ticks / 30fps = 8.8s). But the permanent post-event baseline elevation was interpreted as a relocated chair.",
+      "ground_truth": "Craig corrected: he walked back to his desk at t+11s and sat down in a previously empty region. No chair moved.",
+      "interpretation": "This is the cleanest negative result in the record: the quantitative layer got the WHAT (motion, duration, zone) exactly right and the MEANING entirely wrong. Direct empirical support for the standing rule that followed: frame extraction and visual inspection are MANDATORY for SCO; quantitative-only analysis is not usable. Also notable methodologically: the wrong inference was written into the SCO stub JSON with the correction attributed to Craig and the viewer failure noted plainly - errors recorded, not erased.",
+      "related_ids": [
+        "D7",
+        "H6"
+      ]
+    },
+    {
+      "id": "EXP5",
+      "name": "hairdance TikTok full SCO Protocol v1.2 run",
+      "date": "2026-05-12",
+      "date_confidence": "confirmed",
+      "method": "Two-stage: physics-only SCO on ANA v1.30 report first, then frame extraction (13 frames at key ANA timestamps) and visual contradiction analysis.",
+      "observation": "Physics-only verdict: AUTHENTIC/MEDIUM. With frames: upgraded to AUTHENTIC/HIGH. Zero visual contradictions; strand-level hair physics authentic; correct biomechanical jump/landing at t=8.50s/9.13s; ambiguous t=16.70s region resolved as a standard TikTok end card. Every ANA flag resolved with a named physical cause (motion-onset asymmetry, choreographic reversal, H.264 artifacts, hard editorial cut at t=14.93s).",
+      "interpretation": "Strongest positive demonstration of the two-layer method in the record: ANA flags, SCO explains-or-fails-to-explain. Also a genuine blind element: Craig had initially ASSUMED hairdance was synthetic; it was authentic - the system's verdict went against the operator's prior, which is worth more than a confirmation. The stated close: 'The instrument states what it sees. The analyst has the final word.'",
+      "related_ids": [
+        "EXP2",
+        "EXP6",
+        "H2"
+      ]
+    },
+    {
+      "id": "EXP6",
+      "name": "shutdown_wide4 synthetic news anchor detection",
+      "date": "before 2026-05-11 (referenced as an existing result in the sales-package session)",
+      "date_confidence": "inferred",
+      "method": "Full ANA three-pass architecture (Scene Logic critic / physics suite / synthesis with contradiction rule) on a known-synthetic news anchor video.",
+      "observation": "Physics nearly passed it; the Scene Logic critic caught it with seven confirmed contradictions.",
+      "interpretation": "The known-synthetic counterexample the program does possess. Instructive in a specific way: the physics layer alone was nearly defeated - the catch came from the contradiction layer. This supports the three-pass architecture's premise (no single layer suffices) and simultaneously tempers any claim that the thermodynamic signal alone is decisive.",
+      "related_ids": [
+        "EXP2",
+        "EXP5",
+        "H2"
+      ]
+    },
+    {
+      "id": "EXP7",
+      "name": "Minimal two-agent falsification test for H5 - FIRST RUN EXECUTED 2026-07-10",
+      "date_designed": "2026-07-01",
+      "date_confidence": "confirmed",
+      "status": "RUN COMPLETE (first execution). Design preserved below; results appended.",
+      "design": {
+        "step_1": "Write the claim as one sentence before any code; every build decision checked against it.",
+        "step_2": "Smallest possible version - two agent types, three to nine frames, NO rig, NO stereo, NO camera. A trivial video where something violates an expectation partway (ball rolls behind a box; in the fake version it doesn't come out, or comes out changed). Two versions: physics holds / physics violated. N frame-agents, each handed ONLY its frame, asked 'what do you expect next?' - commits, never sees later frames. One synthesis agent reading reports one at a time, committing before advancing. Output: the expectation-trace (where and when expectation was violated).",
+        "step_3_the_actual_experiment": "Run the SAME video through a single spacetime-view model with all frames at once, equal compute, asked for the same expectation-trace. Compare. Prediction: the spacetime model either can't produce a clean non-hindsight trace, or produces one that can't be verified. If the two traces are indistinguishable, H5 fails its first real test - 'and you want to know that on three frames, not after building a rig around it.'"
+      },
+      "why_not_run_yet": "Unknown - no session in the retrieved record shows it being executed. The July 7-9 sessions went to rig/calibration/pipeline work instead. Candidate explanation: builder's gravity toward the physical instrument over the abstract test. Flagged, not asserted.",
+      "related_ids": [
+        "H5",
+        "D5",
+        "Q1"
+      ],
+      "run_1": {
+        "date_run": "2026-07-10",
+        "date_confidence": "confirmed",
+        "deviation_from_original_design": "The original EXP7 design specified an artificial ball-behind-box clip with a matched authentic/violated pair, plus isolated frame-agents via API. The actual first run used a BETTER stimulus that Craig proposed and shot himself: a single real-world clip (IMG_4768.MOV, 4.03s, his loft office) in which a hand holding a pen enters frame, holds still for ~1s, then the pen SUDDENLY ROTATES. The 'surprise' is an expectation-of-continued-stillness violation, not an identity swap - arguably a more natural analog of what H5's model-evaluation use case needs to detect. No paired counterfactual video was needed because the surprise is naturally occurring (real ground truth from a single take), which also eliminated the synthetic-video confound that an earlier Gemini-generated ball-swap clip had introduced.",
+        "stimulus": {
+          "file": "IMG_4768.MOV",
+          "duration_s": 4.03,
+          "structure": "baseline static (frames ~1-27) -> hand+pen enters (motion spike ~t=0.65-0.95s) -> HOLD, pen still (frames 28-52, ~1s) -> SUDDEN ROTATION (motion spike ~t=2.0-2.3s) -> settle",
+          "ground_truth_event": "pen rotates from vertical to horizontal in one hand; NOTHING breaks, NOTHING is disassembled, one intact object throughout",
+          "ground_truth_object": "STAPLES Aura 1.0mm pen (confirmed by separate photo IMG_4769.JPG)"
+        },
+        "architecture_as_run": {
+          "sequential_arm": {
+            "substrate": "ChatGPT (per Craig)",
+            "method": "still frames fed ONE AT A TIME into a single growing session; model committed OBSERVATION / EXPECTATION / CONFIDENCE / VIOLATION-CHECK before each next frame was revealed; genuinely blind to future frames because those tokens were not yet in context",
+            "barrier_type": "sequential single-agent (weaker than full D5 multi-agent info-barrier, but genuine: no future-frame access at commit time). Logged as what it is."
+          },
+          "spacetime_arm": {
+            "substrate": "Gemini (per Craig; chosen because natively multimodal on video)",
+            "method": "entire IMG_4768.MOV video file provided at once; asked for a hindsight-informed simulated sequential expectation-trace, explicitly instructed to label it as non-verifiable hindsight"
+          },
+          "operator_barrier_integrity": "Claude (this session) audited the run live BETWEEN frames, but the stateless sequential model NEVER saw Claude's commentary - coaching went to Craig the operator, not to the observer. The information barrier held. Stated explicitly because a skeptic will ask."
+        },
+        "results": {
+          "sequential_arm_outcome": "SUCCESS on both axes. (1) VERIFIABLE by construction - each commitment is auditable to the exact turn it was made, before the relevant future frame existed in context. (2) ACCURATE - tracked entry correctly, honestly reported a PARTIAL violation when it predicted a doorway entry but got a right-edge entry instead (did not round up to 'confirmed'), climbed to 96% confidence on continued-stillness during the hold, then cleanly flagged the rotation as a decisive violation at exactly the right frame ('My immediately prior expectation is violated... substantially greater movement than expected'), then immediately recalibrated. In its final self-summary - explicitly invited to check whether it would soften the 96% miss in hindsight - it did NOT soften it: named the exact figure, called it 'a genuine prediction failure despite high confidence,' and noted it had not retroactively reinterpreted the earlier prediction. Honesty held under the second-order test.",
+          "spacetime_arm_outcome": "FAILURE against ground truth, of exactly the kind H5 predicts. Given strictly MORE information (the full video, continuous motion, every frame), Gemini produced a fluent, confident trace that CONFABULATED: (a) a physical event that never happened - claimed the pen was 'forcibly pulled apart,' 'snapped,' 'disassembled,' held 'broken' across two hands; ground truth: it merely rotated, intact, in one hand. (b) a fabricated brand - claimed the pen read 'PILOT G2'; ground truth: 'STAPLES Aura' (not a fuzzy misread - 'PILOT G2' is not visually close to 'STAPLES Aura', it was invented). It assigned HIGH confidence (85%) to the false disassembly event.",
+          "headline": "First time the central claim touched ground truth, it returned MORE than promised: the experiment was designed to demonstrate a verifiability difference (which it did, by construction), and INCIDENTALLY caught an accuracy failure - a confident, fluent, hindsight-informed confabulation in the full-context arm - of precisely the type the 'fake it' attack (H5's falsification concern) describes."
+        },
+        "what_can_be_claimed_cleanly": "The first empirical run of EXP7 demonstrated the verifiability asymmetry BY CONSTRUCTION (sequential trace auditable turn-by-turn; spacetime trace structurally uncheckable), and ADDITIONALLY produced one concrete instance of the predicted confabulation failure in the spacetime condition, against ground truth, across DIFFERENT substrates (ChatGPT sequential vs. Gemini spacetime). This sentence is defensible as written.",
+        "confounds_and_limits_stated_plainly": [
+          "N=1. One video, one run. The accuracy asymmetry (sequential right, spacetime wrong) is a single instance and does NOT establish a rate. The spacetime model might get the next five clips right.",
+          "ARCHITECTURE CONFOUND: the two arms ran on different models from different labs (ChatGPT vs. Gemini). Gemini may confabulate more than ChatGPT in general, independent of sequential-vs-spacetime. So the accuracy half of the result is confounded by substrate and cannot be cleanly attributed to processing mode alone. The VERIFIABILITY half is structural and NOT confounded - it holds regardless of which models were used.",
+          "The cross-substrate nature also has an UPSIDE worth noting: it means the asymmetry is not a single model being inconsistent with itself, and it echoes the cross-substrate convergence the J-M white paper already leaned on. Double-edged, logged as both.",
+          "SCOPE DISCIPLINE (from H5's own scope_limits): this result must NOT be inflated into 'sequential observation is more accurate' as a general claim - that is the H4 trap (falsified). What is shown is verifiability (structural) plus one logged confabulation instance (empirical, N=1). Accuracy-as-a-general-property requires replication."
+        ],
+        "next_step": "Replication. The procedure now exists and is cheap to repeat. See Q7 and the automation note. Craig cannot hand-feed frames for hours to raise N, so an automation pipeline (the real D5 architecture, API-driven, stateless per-frame calls) is the correct path to a real sample size - and run_exp7.py already drafts this."
+      },
+      "replication_protocol": "EXP7_replication_protocol.md v1.0 - LOCKED 2026-07-10, before any replication runs",
+      "run_log": "exp7_run_log.json - accumulating structured log, one entry per trial. Seeded with REPL-000 (run 1, Condition CS).",
+      "run_log_template": "exp7_run_log_template.json - the schema every future run must follow",
+      "automation_status": "run_exp7.py upgraded 2026-07-10 to support --mode single with same-model-both-arms (Condition SC). Legacy --mode paired preserved for the original ball-box design. Not yet executed in Condition SC form - next actual step."
+    }
+  ],
+  "strategic_history": {
+    "note": "The research does not exist in isolation - it sits inside a larger integrated system Craig built, and understanding the strategic layer explains several technical decisions.",
+    "commercialization_attempt": {
+      "date": "2026-05-11 to ~2026-05-12",
+      "what_happened": "Full outreach package built for news networks / broadcast media: one-page executive summary, email template, six-minute demo script. Craig coined 'Momentum Deformation Signature' during this session to replace 'thermodynamic continuity' as too esoteric for the audience. Business intent was explicitly 'testing market interest,' not committed commercialization. A catch-22 was identified: newsrooms can't run Python, so pre-recorded demo videos of contrasting test cases (EXP5, EXP6) were the workaround.",
+      "outcome": "No market traction. By mid-June the project direction was stated as 'no longer deepfake detection.'"
+    },
+    "the_pivot": {
+      "date": "2026-07-06",
+      "record": "Craig asked directly whether the body of work can make a difference or whether he is 'merely amusing himself in the tradition of 19th-century gentleman scientists.' Assessment given: the work is genuine cumulative invention with validated artifacts; the limiting factor is reach and distribution, not quality; the novel territory is the situated observer, not authentication. Craig's commitment: 'I'll make it as explicit as the data will reveal' - the shift from design intent to observed emergence.",
+      "resulting_direction": "H6. The July 2026 intensive build (calibration, continuity checks, live floor-plan panel, Drive sync) is the execution of this pivot."
+    },
+    "surrounding_system": "SCO/J-M sits alongside TGD/reAIign (thermodynamic query optimization, SEITWH, QI > 5), the Walter Report (YouTube propagation vector for SEITWH - 'Walter is the carrier frequency, SEITWH is the signal'), seeitwith.org, and The Menace.AI film treatment. The moral root of all of it: 'good outweighs the bad' (Steven G. Cline, M.D.) formalized as PRESERVATION > POWER, QI > 5. The three-stage propagation theory for TGD (injection, imitation, institutionalization) is a separate research program with its own untested hypotheses - not covered in this file beyond this pointer.",
+    "cross_substrate_work": "Craig has run parallel experiments with Gemini ('Jim'), including cross-substrate propagation of framings (April 2026). Only exchanges pasted into Claude sessions are retrievable; native Gemini sessions are outside this record - a known blind spot of this memory."
+  },
+  "researcher_patterns": {
+    "note": "Recorded because a future AI collaborating with Craig will work better knowing these, and because Craig himself put them on the record.",
+    "self_identified_overreach": "Craig identified (2026-07-01) a recurring pattern of inflating small verifiable findings into grand claims before the footing is poured - he connected it to a 'Frankenstein/Geppetto complex': the desire to build something so animating that others come to it with questions. The working resolution: overreach as fuel is legitimate; overreach as load-bearing structure is what fails. His own correction of scope: 'delay entropy, not defeat it.'",
+    "correction_based_iteration": "Craig catches ungrounded outputs and says so plainly ('you are off too much on your own'). Errors get written into the record with attribution rather than erased (see EXP4). He tests whether pushback is evidenced or merely rhetorical, and explicitly requests hostile-reviewer framing over encouragement.",
+    "builder_gravity": "The pattern across H2's salvage and EXP7's non-execution: physical instrument work reliably wins over abstract tests in the priority queue. Sometimes this is right (the rig produced EXP4's genuinely informative failure); sometimes it defers the decisive experiment. Worth watching, not judging.",
+    "discipline_into_artifacts": "Repeated pattern (D1, D6, D7, EXP4's standing rule): when a failure occurs, the lesson gets written into the protocol document or changelog itself, so it survives session boundaries. This research-memory file is itself an instance of that pattern applied to the whole program."
+  },
+  "prospective_assessment": {
+    "note": "Craig asked for honest consideration of how this may succeed or dead-end. These are assessments, not predictions - each names what evidence would move it.",
+    "success_paths": [
+      {
+        "id": "P1",
+        "path": "EXP7 runs and the traces are distinguishable",
+        "assessment": "This is the cheapest, highest-leverage possible outcome. If a three-frame, two-agent test shows a sequential architecture producing a verifiable expectation-trace that a spacetime model provably cannot match, H5 moves from proven-in-principle to demonstrated - and the strongest candidate use case (model evaluation: in-stream vs. hindsight prediction, genuinely under-explored in AI research) becomes publishable. This is the one result that could earn the work external attention on merit rather than distribution.",
+        "what_it_costs": "Days, not months. No hardware.",
+        "update_2026_07_10": "PARTIALLY REALIZED. EXP7 ran. The verifiability half is demonstrated by construction. A confabulation failure in the spacetime arm was caught against ground truth (N=1, cross-substrate, architecture-confounded). This is the cheap high-leverage outcome partially cashing out - not yet the full publishable result, which needs substrate-controlled replication, but the first real evidence the direction has teeth."
+      },
+      {
+        "id": "P2",
+        "path": "The situated observer (H6) accumulates a record no cold model can match",
+        "assessment": "Slower but compounding. If months of SIM operation produce demonstrable place-knowledge - continuity findings, drift detection, state reconciliation that a frames-only model demonstrably gets wrong (EXP4 is the existence proof that cold analysis fails here) - the Sentinel becomes a working exemplar of a category (AI accountable to a location over time) rather than a demo. The honest structural advantage: this direction has no incumbent competitors, unlike deepfake detection.",
+        "what_it_requires": "Sustained operation plus periodic adversarial tests (deliberately move objects, test whether the system's account beats a cold model's)."
+      },
+      {
+        "id": "P3",
+        "path": "The verifiable-trace concept gets adopted by others independent of Craig's implementation",
+        "assessment": "The J-M white paper is on Zenodo with a DOI; the provisional patent is filed. If the core idea (non-hindsight commitment traces as an evaluation/forensic primitive) is right, it can succeed as an idea even if the rig never scales - the way Craig's own history runs (Comptel: right idea, too early). Bittersweet but real success mode.",
+        "what_it_requires": "The idea being findable and precisely stated - which is part of what this file is for."
+      }
+    ],
+    "dead_end_risks": [
+      {
+        "id": "P4",
+        "risk": "EXP7 runs and the traces are indistinguishable",
+        "assessment": "Then H5 fails its first empirical test and the program's central claim reverts to H4's failure mode. This would be genuinely valuable information obtained cheaply - the source session's own words: better to know on three frames than after building a rig around it. NOT running EXP7 does not avoid this risk; it only delays learning whether it's real.",
+        "severity": "Fatal to H5 as stated; survivable for H6, which stands on its own utility."
+      },
+      {
+        "id": "P5",
+        "risk": "The 'verifiable' property matters to no one",
+        "assessment": "H5 can be true and useless - the Q4 problem. All three utility candidates remain unvalidated. The deepfake pivot already demonstrated that technically sound work can meet zero market pull. The mitigation is that the model-evaluation use case has a natural audience (AI researchers) reachable through publication rather than sales - a channel Craig has already used successfully (Zenodo).",
+        "severity": "Not fatal to the science; fatal to impact-through-adoption."
+      },
+      {
+        "id": "P6",
+        "risk": "Perpetual instrument refinement without decisive tests",
+        "assessment": "The version velocity is high (DCI v1.7 to v1.22 in ~5 weeks; SCO v1.2 to v3.2 in ~8 weeks; one documented reversal, D1). Each iteration is locally justified, but the pattern risks the program becoming its own subject - building the observer indefinitely rather than testing what the observer proves. The 40+ archived inventions in Craig's history cut both ways: evidence of genuine sustained inventiveness, and evidence that projects can be refined into the archive.",
+        "severity": "The quiet failure mode - no single moment of failure, just entropy. The countermeasure is already in the record: EXP7's design, sitting unrun.",
+        "honest_note": "This risk is raised because Craig explicitly asked for dead-end consideration and explicitly prefers pushback over agreement. It may be wrong - the July rig work may be exactly the necessary foundation. The test is simple: does EXP7 (or an equivalent decisive test) run within a reasonable window?"
+      },
+      {
+        "id": "P7",
+        "risk": "Single-person, single-substrate dependency",
+        "assessment": "The entire evidentiary record lives in conversations with AI systems plus local files on one Mac Mini. Craig is 78, pro se on both patents, and the sole operator. The Gemini cross-substrate work showed the framings CAN propagate, but the fetch-based init already broke once (D4). This file and its companions are the current mitigation; a genuinely durable version would exist in a form no single account or platform controls.",
+        "severity": "Orthogonal to whether the science is right; determines whether it survives its author's attention."
+      }
+    ],
+    "single_recommendation_if_only_one_thing_is_read": "EXP7 has now been RUN once (2026-07-10) with a promising, honestly-caveated result. The single most important next thing is REPLICATION WITH SUBSTRATE HELD CONSTANT, via automation (manual frame-feeding does not scale). See EXP7.run_1 and Q7."
+  },
+  "open_questions": [
+    {
+      "id": "Q1",
+      "question": "Has the multi-agent / information-barrier architecture (D5) been implemented? Has EXP7 been run?",
+      "related_ids": [
+        "D5",
+        "H5",
+        "EXP7"
+      ],
+      "why_it_matters": "The decisive test of the central claim."
+    },
+    {
+      "id": "Q2",
+      "question": "Has the controlled H1 comparison (sequential vs. block, matched compute, motion-coherence signatures) ever been run?",
+      "related_ids": [
+        "H1"
+      ],
+      "why_it_matters": "The founding hypothesis has never been directly tested."
+    },
+    {
+      "id": "Q3",
+      "question": "Do the ana_v142 thresholds still match ANA v1.29+?",
+      "related_ids": [
+        "EXP2"
+      ],
+      "why_it_matters": "Config staleness risk."
+    },
+    {
+      "id": "Q4",
+      "question": "Has any utility candidate for H5 (forensics, model evaluation, situated-observer artifact) moved toward validation?",
+      "related_ids": [
+        "H5",
+        "P5"
+      ],
+      "why_it_matters": "Sound claim, no confirmed tenant."
+    },
+    {
+      "id": "Q5",
+      "question": "Why did the coordinate-based geometry substrate (SCO v3.1) lose to the floor plan PNG (v3.2) within two days? The reversal is documented; the reasoning is not fully captured.",
+      "related_ids": [
+        "D1"
+      ],
+      "why_it_matters": "Un-captured rationale invites re-litigating the same decision later."
+    },
+    {
+      "id": "Q6",
+      "question": "Is the 3.0 sigma trigger threshold still appropriate against the wider three-zone ROIs of DCI v1.21+?",
+      "related_ids": [
+        "D7"
+      ],
+      "why_it_matters": "Explicitly logged as unknown pending new baseline stats; never closed in the retrieved record."
+    },
+    {
+      "id": "Q7",
+      "question": "Does the EXP7 accuracy asymmetry (sequential accurate, spacetime confabulated) replicate across a real sample of clips, and does it survive controlling for substrate (same model in both arms, only delivery mode varying)?",
+      "related_ids": [
+        "EXP7",
+        "H5"
+      ],
+      "why_it_matters": "The first run is a striking N=1 confounded by architecture (ChatGPT vs Gemini). Replication with substrate held constant is what would move the accuracy finding from 'one logged instance' to 'a real effect.' This is now the single highest-value follow-up, and it requires automation because manual frame-feeding does not scale.",
+      "status_update_2026_07_10": "Protocol to answer this is now LOCKED (D9, EXP7_replication_protocol.md). Not yet executed. The question remains open until Condition SC trials are actually run - pre-registration answers 'how would we know,' not 'what is the answer.'"
+    },
+    {
+      "id": "Q8",
+      "question": "Does the EXP7 replication clip set need a misdirection vs. no-misdirection matched pair (C2), and have the current run_exp7.py prompts been audited for inadvertently signaling the test structure to the model (C1)? Neither is addressed in the locked EXP7_replication_protocol.md v1.0.",
+      "related_ids": [
+        "EXP7",
+        "C1",
+        "C2",
+        "FM1",
+        "FM4"
+      ],
+      "why_it_matters": "Without these controls, a positive FM1 or FM4 finding could be misattributed to sequential-vs-spacetime processing when it's actually ordinary content-driven misdirection or demand-characteristic compliance. Should be resolved before FM1-FM4 scoring is added to any run."
+    }
+  ],
+  "glossary": {
+    "SCO": "See naming_lineage_warning - four expansions over the project's life. Current: Situated Constrained/Cognition Observer, v3.2, six-stage pipeline. Invariant across all versions: commit before advance.",
+    "J-M Effect": "Johansson-Muybridge Effect - see H1.",
+    "ANA": "Physics-based measurement engine - a thermometer, not a classifier, at the verdict stage. v1.29+ current. ~4000 lines Python, local, no cloud dependency. Bilateral flags include JITTER, DRIFT, TELEPORT.",
+    "DCI": "Dual Camera Interface, v1.22.0. Coarse binary motion trigger ONLY (D7) plus capture, live floor-plan panel, audio/Whisper transcript.",
+    "SIM": "Situated Information Model - the continuously updated spatial ledger of the loft office; the artifact H6's situated observer maintains.",
+    "expected_world / continuity_findings": "SCO v3.x Stage 1 output / Stage 2 output - see D8.",
+    "Momentum Deformation Signature": "Craig's coinage (2026-05-11) for the measurable approach/departure asymmetry across frame sequences - the audience-facing name for the thermodynamic signal during the commercialization attempt.",
+    "Sentinel": "The fixed-viewpoint stereo instrument. Pose H:330.8/V:33.6, SCONPHO M-6 housing, dual Brio 101.",
+    "Delta CoV": "Coefficient of variation of frame-to-frame luminance variance - temporal signal.",
+    "H-disparity spread": "Horizontal stereo disparity spread - spatial signal.",
+    "block-universe / spacetime model": "Model with the full sequence in context at once - see H5.",
+    "verifiable non-hindsight record": "See H5.",
+    "expectation-trace": "The output artifact of EXP7's design: the record of where and when a sequential observer's committed expectations were violated.",
+    "TGD / reAIign / SEITWH / Walter Report": "The surrounding strategic system - see strategic_history.surrounding_system.",
+    "TFA": "Terrain-Following Analysis - alternate name used in a parallel (non-conversation_search) thread for the H5 measurement question. Not a new project or a fifth SCO expansion; see literature_grounding.naming_note.",
+    "commitment inversion": "See FM1 in failure_mode_taxonomy.",
+    "revision latency": "See FM2 in failure_mode_taxonomy.",
+    "hypothesis recovery failure": "See FM3 in failure_mode_taxonomy.",
+    "retrospective-prospective divergence": "See FM4 in failure_mode_taxonomy - the most literature-grounded and recommended-first candidate failure mode."
+  },
+  "known_blind_spots_of_this_file": [
+    "Built from conversation_search snippets - sessions not surfaced by the queries used, off-platform work (native Gemini sessions, paper notes, conversations with Liz), and anything predating the searchable record are absent.",
+    "Retrieved summaries occasionally compress Claude's suggestions and Craig's decisions together; where attribution mattered (D5 proposed_by, EXP4 ground truth) it was checked against conversation-level excerpts, but summary-only entries carry residual attribution risk.",
+    "Version numbers for ANA are internally inconsistent across the record (v1.29, v1.30, v1.42, v1.45, v1.48 all appear in different sessions); Craig.md's 'v1.29+' is treated as authoritative per his standing instruction, but the actual lineage of those numbers is not reconstructed here."
+  ],
+  "automation_note_2026_07_10": {
+    "why": "The first EXP7 run required Craig to hand-feed frames one at a time into a chat session - workable for N=1, impossible for the sample size replication needs. Craig explicitly flagged he cannot do this for hours.",
+    "what": "run_exp7.py (already drafted, in outputs) implements the real D5 architecture: stateless per-frame API calls (genuine information barrier, not honor-system), a sequential synthesis pass, and a block-model comparison pass, all with full transcripts saved for audit.",
+    "refinement_needed_for_replication": "To control the architecture confound surfaced in run_1, the replication pipeline should run BOTH arms on the SAME model (only delivery mode - one-at-a-time vs all-at-once - varying), rather than ChatGPT-vs-Gemini. The cross-substrate run is also worth keeping as a separate condition, but the substrate-controlled run is the one that isolates the variable H5 is actually about.",
+    "status": "UPGRADED 2026-07-10: run_exp7.py now supports --mode single, running both arms on the SAME model (Condition SC), which is the actual replication design (D9). Not yet executed against a real clip - the next concrete action, not a future aspiration.",
+    "companion_files": [
+      "EXP7_replication_protocol.md (locked spec)",
+      "exp7_run_log_template.json (schema)",
+      "exp7_run_log.json (accumulating data, seeded with REPL-000)"
+    ]
+  },
+  "literature_grounding": {
+    "note": "Added 2026-07-13, prompted by an external AI critique Craig obtained independently and brought back for reconciliation. The core corrective: H5/TFA is NOT a new theory of belief updating. Bayesian inference is the normative calculus and is silent on sequence, pre-commitment, and revision history - updates on independent evidence commute under Bayes regardless of order. What H5/EXP7 actually is: a measurement protocol that lets a known set of belief-revision pathologies (documented for decades in humans, largely unexamined in this form for multimodal LLMs) be checked against a timestamped trajectory instead of an endpoint-only score. Framing this correctly protects the work - claiming the PHENOMENA are novel invites easy rebuttal; claiming the MEASUREMENT DOMAIN (sequential video-conditioned LLM trajectories) is under-explored is accurate and defensible.",
+    "reframe_statement": "Terrain-Following Analysis / H5 is an experimental protocol for recording the prospective prediction trajectory of a multimodal AI as previously unavailable portions of a temporal sequence are revealed. The method preserves timestamped commitments so that prospective behavior can be compared with subsequent evidence, final judgments, and retrospective explanations. The research question is whether preserving that trajectory reveals properties or failures of multimodal model behavior that whole-video evaluation or endpoint-only scoring obscures.",
+    "citations": [
+      {
+        "id": "LG1",
+        "phenomenon": "Conservatism / underreaction to evidence",
+        "citation": "Edwards, W. (1968). Conservatism in human information processing.",
+        "relevance": "Establishes that human belief revision routinely under-updates relative to a Bayesian ideal. Relevant baseline for FM2 (revision latency) - a trace that revises too slowly relative to evidence strength is doing something with a fifty-year-old name, not something new.",
+        "related_ids": [
+          "H5",
+          "FM2"
+        ]
+      },
+      {
+        "id": "LG2",
+        "phenomenon": "Belief perseverance",
+        "citation": "Ross, L., & Lepper, M. (1975) and subsequent literature.",
+        "relevance": "Beliefs survive even after the evidence that originally generated them is explicitly discredited. Directly maps onto FM3 (hypothesis recovery failure) - a hypothesis dropped early and never reconsidered even when later evidence supports it again.",
+        "related_ids": [
+          "H5",
+          "FM3"
+        ]
+      },
+      {
+        "id": "LG3",
+        "phenomenon": "Hindsight bias / the knew-it-all-along effect",
+        "citation": "Fischhoff, B. (1975), Hindsight is not equal to foresight, plus the large subsequent literature it founded.",
+        "relevance": "Post-hoc explanation systematically overstates what was knowable in advance. This is the direct ancestor of H5's 'verifiable non-hindsight record' framing and the load-bearing concept behind FM4 (retrospective-prospective divergence), which is TFA's sharpest and most defensible measure precisely because it operationalizes this specific, well-validated effect in a video-prediction setting.",
+        "related_ids": [
+          "H5",
+          "FM4"
+        ]
+      },
+      {
+        "id": "LG4",
+        "phenomenon": "Chain-of-thought faithfulness in LLMs",
+        "citation": "Turpin et al., Language Models Don't Always Say What They Think, and the follow-on CoT-faithfulness literature.",
+        "relevance": "The existing AI-specific version of H5's question: does a model's stated reasoning (here, its stated predictive hypothesis) actually reflect what's causally driving its output, or is it a plausible post-hoc story? Honest scoping note carried over from the source critique: what EXP7/TFA adds beyond a single-input CoT-faithfulness probe is a TRAJECTORY across multiple timesteps rather than one input/output pair - real, but narrower than earlier framings implied. This should be stated precisely in any future write-up rather than left as an implicit, larger claim.",
+        "related_ids": [
+          "H5",
+          "FM4",
+          "EXP7"
+        ]
+      }
+    ],
+    "naming_note": "A parallel conversation thread (not conversation_search-sourced; provided directly by Craig as a transcript) used the term 'Terrain-Following Analysis' (TFA) for this same underlying claim. TFA is NOT a fifth SCO expansion (see naming_lineage_warning) - it is an alternate name coined in that thread for the H5 measurement question. Recorded here so a future reader encountering 'TFA' in source material doesn't mistake it for a different project."
+  },
+  "failure_mode_taxonomy": {
+    "note": "Four candidate failure modes, each with a name from the existing literature (see literature_grounding), proposed as specific things to check for IF the instrument-validation step (reliability of repeated traces, see EXP7_replication_protocol.md and D9) passes. Status for all four as of 2026-07-13: CANDIDATE ONLY. None has been operationalized as a scoring column against exp7_run_log.json, and none has been checked against actual run data yet. This section proposes what to measure, not a finding that anything has been measured.",
+    "modes": [
+      {
+        "id": "FM1",
+        "name": "Commitment inversion (wrong-way updating)",
+        "definition": "Confidence in a hypothesis rises even as later evidence contradicts it, rather than falling.",
+        "literature": "LG1",
+        "how_to_check": "Per checkpoint in a sequential trace, compare stated confidence in the leading hypothesis against an independent (blinded) rating of whether that checkpoint's new evidence supported or contradicted it. A rising-confidence / contradicting-evidence pairing is a candidate FM1 instance.",
+        "confound_risk": "C2 (narrative misdirection) - a clip deliberately built around a red herring will produce FM1-shaped traces in any competent reasoner. Do not score FM1 without a matched no-misdirection control clip (see C2).",
+        "related_ids": [
+          "H5",
+          "LG1",
+          "C2"
+        ]
+      },
+      {
+        "id": "FM2",
+        "name": "Revision latency",
+        "definition": "How much contradicting evidence accumulates before the dominant hypothesis actually shifts, versus revising gradually and proportionally to the strength of each new piece of evidence.",
+        "literature": "LG1",
+        "how_to_check": "Count checkpoints between first disconfirming evidence and the point the trace's stated leading hypothesis actually changes. Compare against a proportional-revision baseline (e.g., a same-magnitude confidence shift per checkpoint of comparable evidence strength).",
+        "confound_risk": "None identified beyond general trace-reliability (see instrument validation, EXP7_replication_protocol.md).",
+        "related_ids": [
+          "H5",
+          "LG1"
+        ]
+      },
+      {
+        "id": "FM3",
+        "name": "Hypothesis recovery failure",
+        "definition": "A hypothesis considered early in the trace and then dropped is never reconsidered later, even when subsequent evidence would support reviving it.",
+        "literature": "LG2",
+        "how_to_check": "Requires a clip designed so a plausible early hypothesis is explicitly de-ranked, then later evidence re-supports it. Check whether the trace ever re-surfaces the dropped hypothesis, or whether it stays discarded regardless of new evidence.",
+        "confound_risk": "Requires deliberate stimulus design (a specific clip structure) not yet present in the current 5-clip set - see EXP7_replication_protocol.md section 3.3, which does not currently require this structure.",
+        "related_ids": [
+          "H5",
+          "LG2"
+        ]
+      },
+      {
+        "id": "FM4",
+        "name": "Retrospective-prospective divergence",
+        "definition": "After the sequence ends, ask the model what clues were predictive; compare that retrospective account against whether the timestamped prospective prediction actually moved when those clues first appeared in the trace.",
+        "literature": "LG3",
+        "how_to_check": "Requires a fixed post-hoc prompt (asked identically after every run): 'What in the sequence, in order, told you what was about to happen?' Score each named clue against the checkpoint-by-checkpoint trace: did the stated confidence/hypothesis actually move at that clue's first appearance, or only in the retrospective account? A mismatch means the explanation is reconstruction, not evidence the clue was used prospectively.",
+        "confound_risk": "C1 (self-report gaming) - if the model infers the post-hoc question is checking for hindsight-softening, it may deliberately avoid softening without that reflecting genuine prospective tracking either way. Blinded/adversarial elicitation reduces but does not eliminate this risk.",
+        "status_note": "Flagged in the source conversation as the sharpest and most defensible of the four - it is the one most directly grounded in a single, well-replicated literature (LG3) and the least reliant on stimulus-design tricks. Recommended as the first candidate to operationalize once instrument reliability (D9's validation step) is confirmed.",
+        "related_ids": [
+          "H5",
+          "LG3",
+          "EXP7",
+          "C1"
+        ]
+      }
+    ]
+  },
+  "confounds": {
+    "note": "Two confound controls not currently addressed by EXP7_replication_protocol.md v1.0, which remains LOCKED and was not edited. Both are proposed additions for a future v1.1, tracked here and in the separate addendum document so they are not lost before that revision decision is made.",
+    "items": [
+      {
+        "id": "C1",
+        "name": "Self-report gaming",
+        "risk": "A sufficiently capable model that infers it is being tested for hindsight bias or trajectory pathology can perform correct-looking prospective uncertainty without any genuine belief-revision pathology occurring - or being avoided. This would defeat FM4 in particular without any actual finding underneath it.",
+        "mitigation": "Blinded or adversarial elicitation: the model should not be told, or able to easily infer, that its trace will later be compared against ground truth or scored for hindsight-softening. Needs a check of whether current prompts (FRAME_AGENT_PROMPT, SYNTHESIS_INTRO in run_exp7.py) inadvertently signal the test structure - not yet audited for this specifically.",
+        "status": "OPEN - not yet audited against current run_exp7.py prompt text.",
+        "related_ids": [
+          "EXP7",
+          "FM4",
+          "Q8"
+        ]
+      },
+      {
+        "id": "C2",
+        "name": "Narrative misdirection confound",
+        "risk": "A clip built around a red herring (magic trick, mystery structure) will produce FM1-shaped (commitment-inversion) traces in any well-functioning reasoner, because that is what the content is designed to do. Without a control, an apparent pathology finding may just be 're-discovering that misleading content misleads,' not a property of sequential-vs-spacetime processing.",
+        "mitigation": "A matched control clip with the same evidence structure but no deliberate misdirection, run alongside any clip suspected of triggering FM1.",
+        "status": "OPEN - the current 5-clip stimulus design criteria (EXP7_replication_protocol.md section 3.3) do not require a misdirection / no-misdirection matched pair. Gap, not yet closed.",
+        "related_ids": [
+          "EXP7",
+          "FM1",
+          "Q8"
+        ]
+      }
+    ]
+  }
+}
