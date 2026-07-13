@@ -1,0 +1,212 @@
+{
+  "video": "clips/IMG_4792.MOV",
+  "native_fps": 60.0,
+  "duration": 6.85,
+  "sigma": 3.0,
+  "threshold": 0.055521180922463526,
+  "motion_windows": [
+    [
+      2.45,
+      2.75
+    ]
+  ],
+  "baseline_fps": 5.0,
+  "dense_fps": 20.0,
+  "frames": [
+    {
+      "file": "F001.jpg",
+      "timestamp_s": 0.0,
+      "kind": "baseline"
+    },
+    {
+      "file": "F002.jpg",
+      "timestamp_s": 0.2,
+      "kind": "baseline"
+    },
+    {
+      "file": "F003.jpg",
+      "timestamp_s": 0.4,
+      "kind": "baseline"
+    },
+    {
+      "file": "F004.jpg",
+      "timestamp_s": 0.6,
+      "kind": "baseline"
+    },
+    {
+      "file": "F005.jpg",
+      "timestamp_s": 0.8,
+      "kind": "baseline"
+    },
+    {
+      "file": "F006.jpg",
+      "timestamp_s": 1.0,
+      "kind": "baseline"
+    },
+    {
+      "file": "F007.jpg",
+      "timestamp_s": 1.2,
+      "kind": "baseline"
+    },
+    {
+      "file": "F008.jpg",
+      "timestamp_s": 1.4,
+      "kind": "baseline"
+    },
+    {
+      "file": "F009.jpg",
+      "timestamp_s": 1.6,
+      "kind": "baseline"
+    },
+    {
+      "file": "F010.jpg",
+      "timestamp_s": 1.8,
+      "kind": "baseline"
+    },
+    {
+      "file": "F011.jpg",
+      "timestamp_s": 2.0,
+      "kind": "baseline"
+    },
+    {
+      "file": "F012.jpg",
+      "timestamp_s": 2.2,
+      "kind": "baseline"
+    },
+    {
+      "file": "F013.jpg",
+      "timestamp_s": 2.4,
+      "kind": "baseline"
+    },
+    {
+      "file": "F014.jpg",
+      "timestamp_s": 2.45,
+      "kind": "dense"
+    },
+    {
+      "file": "F015.jpg",
+      "timestamp_s": 2.525,
+      "kind": "dense"
+    },
+    {
+      "file": "F016.jpg",
+      "timestamp_s": 2.6,
+      "kind": "dense"
+    },
+    {
+      "file": "F017.jpg",
+      "timestamp_s": 2.675,
+      "kind": "dense"
+    },
+    {
+      "file": "F018.jpg",
+      "timestamp_s": 2.75,
+      "kind": "dense"
+    },
+    {
+      "file": "F019.jpg",
+      "timestamp_s": 2.8,
+      "kind": "baseline"
+    },
+    {
+      "file": "F020.jpg",
+      "timestamp_s": 3.0,
+      "kind": "baseline"
+    },
+    {
+      "file": "F021.jpg",
+      "timestamp_s": 3.2,
+      "kind": "baseline"
+    },
+    {
+      "file": "F022.jpg",
+      "timestamp_s": 3.4,
+      "kind": "baseline"
+    },
+    {
+      "file": "F023.jpg",
+      "timestamp_s": 3.6,
+      "kind": "baseline"
+    },
+    {
+      "file": "F024.jpg",
+      "timestamp_s": 3.8,
+      "kind": "baseline"
+    },
+    {
+      "file": "F025.jpg",
+      "timestamp_s": 4.0,
+      "kind": "baseline"
+    },
+    {
+      "file": "F026.jpg",
+      "timestamp_s": 4.2,
+      "kind": "baseline"
+    },
+    {
+      "file": "F027.jpg",
+      "timestamp_s": 4.4,
+      "kind": "baseline"
+    },
+    {
+      "file": "F028.jpg",
+      "timestamp_s": 4.6,
+      "kind": "baseline"
+    },
+    {
+      "file": "F029.jpg",
+      "timestamp_s": 4.8,
+      "kind": "baseline"
+    },
+    {
+      "file": "F030.jpg",
+      "timestamp_s": 5.0,
+      "kind": "baseline"
+    },
+    {
+      "file": "F031.jpg",
+      "timestamp_s": 5.2,
+      "kind": "baseline"
+    },
+    {
+      "file": "F032.jpg",
+      "timestamp_s": 5.4,
+      "kind": "baseline"
+    },
+    {
+      "file": "F033.jpg",
+      "timestamp_s": 5.6,
+      "kind": "baseline"
+    },
+    {
+      "file": "F034.jpg",
+      "timestamp_s": 5.8,
+      "kind": "baseline"
+    },
+    {
+      "file": "F035.jpg",
+      "timestamp_s": 6.0,
+      "kind": "baseline"
+    },
+    {
+      "file": "F036.jpg",
+      "timestamp_s": 6.2,
+      "kind": "baseline"
+    },
+    {
+      "file": "F037.jpg",
+      "timestamp_s": 6.4,
+      "kind": "baseline"
+    },
+    {
+      "file": "F038.jpg",
+      "timestamp_s": 6.6,
+      "kind": "baseline"
+    },
+    {
+      "file": "F039.jpg",
+      "timestamp_s": 6.8,
+      "kind": "baseline"
+    }
+  ]
+}

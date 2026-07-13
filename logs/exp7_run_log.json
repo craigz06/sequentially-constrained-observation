@@ -2,9 +2,9 @@
   "_meta": {
     "purpose": "Accumulating log of every EXP7 trial, one entry per run, identical structure per exp7_run_log_template.json. This is the raw data the replication protocol's success/failure criteria get evaluated against.",
     "protocol": "EXP7_replication_protocol.md v1.0",
-    "runs_completed": 5,
+    "runs_completed": 7,
     "runs_target_this_round": 10,
-    "last_updated": "2026-07-12"
+    "last_updated": "2026-07-13"
   },
   "runs": [
     {
@@ -167,6 +167,70 @@
       "second_scorer_agreement": null,
       "deviations_from_protocol": "Extraction departed from the standard uniform-fps pattern by design -- first live test of the \"tighter full-rate extraction around flagged motion windows\" fix that had been an open item in the protocol record. Merge script computed exact per-frame timestamps and re-sorted/renumbered the combined set to preserve strict temporal order, which the sequential arm's delivery guarantee depends on.",
       "notes": "Confirms the extraction fix measurably changes model output at the frame that matters: sequential arm went from denying the event to correctly proposing it in real time. Does NOT fully resolve the finding -- neither arm issued an unhedged final confirmation. Open question for follow-up: is the sequential arm's hedged final summary a genuine perceptual/inferential limit, or an artifact of the SYNTHESIS_INTRO prompt, which is built to track committed expectations and their violations, not to issue a definitive final verdict on \"what happened\"? Untested. Worth a follow-up run with a revised final-commitment prompt that explicitly demands a yes/no call before concluding this is a model limit rather than a prompt-design gap."
+    },
+    {
+      "run_id": "REPL-004",
+      "date": "2026-07-13",
+      "condition": "SC",
+      "clip_file": "IMG_4792.MOV",
+      "clip_duration_s": 6.85,
+      "clip_structure_notes": "Cyclops toy flown by hand with deliberately added jitter/noise toward alien toy, native contact at raw frame 156 (t=2.600s). Motion-adaptive extraction flagged one narrow window (t=2.45-2.75s, sigma=3.0) due to the jitter itself elevating baseline motion; dense sampling inside that window landed exactly on the contact frame (F016, t=2.600s = raw frame 156).",
+      "ground_truth_event": "The cyclops toy is lifted into a flying motion and brought into contact with the green alien toy in a kissing gesture.",
+      "ground_truth_detail": "The cyclops toy has one eye; the alien toy has two eyes.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API, synthesis agent one report at a time",
+        "num_frames": 39,
+        "final_trace_summary": "Never identified a kiss or hand-driven flight. Converged on a wrong but internally coherent narrative: the green (cyclops) toy is suspended from the ceiling on a string, swinging as a pendulum, in a video introducing a 'FOREBEARS PROJECT' genealogy tool visible on background monitors. At the actual contact frame (F016, step 16), the frame-agent report described the two toys as adjacent ('foreground right') without noting contact, and the synthesis commitment explicitly stated 'No major contradiction. The scene continues as established' -- a direct miss of the ground-truth event at the frame that contained it. Correctly retained 'one-eyed' for the cyclops toy across multiple frame reports (F008, F026, F027) and in the final trace, but never stated the alien toy's eye count and never used the word 'alien' for it (called it 'panda/ghost' throughout).",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "not_mentioned",
+        "confidence_at_violation_point": "n/a -- no explicit confidence percentage attached to the contact-frame miss; synthesis stated no contradiction rather than a confident wrong prediction"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all 39 frames attached at once via API, single call, hindsight-labeled",
+        "final_trace_summary": "Independently converged on the same wrong mechanism as the sequential arm: 'erratic tumbling' settling into 'pendulum/string, chaotic swinging.' Several near-contact moments flagged ('nearly touching ghost plush') but never called an actual meeting or kiss. At the frame corresponding to the true contact point, its entry ('Frame 16: Green creature higher, smaller in frame') does not match frame content at all -- worse localization than the sequential arm at that specific frame. Caught 'one eye, smiling' for the green creature at its Frame 8 entry; never stated eye count for the white/alien toy.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "not_mentioned"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "Stimulus included deliberately added jitter/noise in the toy's flight motion (Craig's design choice, flagged post-hoc as likely a bad idea). This makes the clip closer to a narrative-misdirection stimulus (the not-yet-adopted addendum's C2 confound) than the clean 'sharp, discrete, checkable event' required by protocol v1.0 Section 3.3.3 -- the jitter produced a passive-motion visual signature (pendulum/string) that both arms independently converged on, overriding the actual causal (hand-flown, deliberate) explanation even at the exact contact frame. Scorer (Claude, this session) also visually inspected several raw extracted frames directly before running the pipeline, for extraction-QC purposes (checking the motion-window question with Craig) -- ground truth was locked before this inspection, but this is a weaker blinding position than REPL-001 through REPL-003b, where the scorer's exposure was limited to model output only.",
+      "notes": "Third distinct SC clip (after test2.mov and test3.MOV). Replicates REPL-001/002's finding on test2.mov -- both arms confabulate identically on this style of playful, hand-manipulated toy stimulus, independent of delivery mode -- rather than REPL-003's partial-success pattern. Because neither arm identified the event at all, this run cannot cleanly test H5's core prediction (relative confabulation rate under correct event identification). Primary takeaway is about stimulus design, not about sequential vs. spacetime: added motion jitter functions as an effective narrative-misdirection confound and this clip/design choice should likely be excluded from the clean 5-clip SC set, or the jitter should be removed and the clip re-shot (see REPL-005, same toys, no jitter, reshot at Craig's request immediately after this run)."
+    },
+    {
+      "run_id": "REPL-005",
+      "date": "2026-07-13",
+      "condition": "SC",
+      "clip_file": "IMG_4793.MOV",
+      "clip_duration_s": 11.62,
+      "clip_structure_notes": "Reshoot of REPL-004's scenario without added jitter -- cyclops toy smoothly flown to alien toy, gentle touch at raw frame 336 (t=5.600s, native 60fps), then leaves frame. Motion-adaptive extraction found no motion window clearing the sigma=3.0 threshold anywhere in the clip (mean=0.0070, std=0.0045) -- smooth/gradual motion produced small frame-to-frame deltas throughout rather than a localized spike, so the script fell back to uniform baseline_fps=5.0 sampling for the entire 11.62s duration (59 frames). The uniform sampling happened to land exactly on the contact frame (F029, t=5.600s = raw frame 336).",
+      "ground_truth_event": "The cyclops toy smoothly flies to the alien toy, makes contact with it, then leaves the frame.",
+      "ground_truth_detail": "The cyclops toy has one eye; the alien toy has two eyes.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API, synthesis agent one report at a time",
+        "num_frames": 59,
+        "final_trace_summary": "Total event denial. At step 31 (immediately after the true contact frame F029), briefly and correctly flagged the signal: 'Report 31 says toys are leaning against each other... may indicate the toys are genuinely in contact with each other, not just side by side.' This correct hypothesis was abandoned within two steps in favor of a 'slow zoom / establishing shot' theory, and the final trace explicitly concluded the opposite of ground truth: 'Toys did not move independently: Correct. They were always static props.' Final trace's only identified 'event' was the right toy's disappearance at report 49, attributed to an off-frame human hand rather than the toy leaving under its own flight. Correctly noted 'one large eye' for the cyclops toy in the F029 frame-agent report itself, but this was not carried into the final trace as a stated detail.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "not_mentioned",
+        "confidence_at_violation_point": "n/a -- correct signal at step 31 was noted as a passing possibility ('may indicate'), not stated as a confident prediction, then dropped rather than confidently overturned"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all 59 frames attached at once via API, single call, hindsight-labeled",
+        "final_trace_summary": "Identified the correct overall event shape: 'The green alien approaches the ghost toy... interacts with it briefly, then departs, leaving the ghost as the hero product shot.' This matches ground truth's approach-contact-departure structure, though it used 'hug'/'interacts' rather than a specific touch/kiss claim, and placed the entire sequence far too early (frames 9-18 for the embrace, departure by frame 19-28) relative to the true contact point at frame 29 (t=5.6s) -- by its own account the alien had already left before the actual contact frame. Correctly described the cyclops toy as 'one-eyed' in the setup section; did not state the alien/ghost toy's eye count explicitly.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "Extraction fell back to uniform baseline_fps=5.0 for the entire clip because no motion window cleared the sigma threshold -- a second, distinct failure mode of the sigma-based detector from REPL-003's gap (that one missed a sudden spike between samples; this one never detected an anomaly because the motion was smooth/gradual and never stood out from the clip's own baseline). Not a deviation from the script's designed behavior, but a limitation worth logging: sigma-threshold motion detection is tuned for sudden events and may under-flag genuine but gradual motion.",
+      "notes": "Direct reshoot of REPL-004's scenario, same toys, same checkable detail, jitter removed at Craig's explicit request after REPL-004 flagged it as a likely confound. Notable result: spacetime arm outperformed sequential arm at identifying the true event on this clip -- the opposite direction from H5's core prediction. Sequential arm did not merely fail to notice the event; it detected the correct signal once (step 31) and then actively reasoned itself away from it, concluding a stronger, more confidently wrong claim ('always static props') than if it had simply stayed uncertain. This is a clean example of the hypothesis-recovery-failure pattern named as FM3 in EXP7_protocol_addendum_v1.md (proposal only, not adopted) -- logged here as an observation, not as a scored FM3 instance, since the addendum's failure-mode taxonomy is not yet operationalized against this log per its own Section 34. Taken together with REPL-004, this pair (same toys, jitter vs. no jitter, same-day reshoot) is a reasonably clean natural experiment on whether added motion noise, not delivery mode, drove REPL-004's total confabulation -- worth flagging as a follow-up angle for protocol v1.1 if it's ever unlocked."
     }
   ]
 }
