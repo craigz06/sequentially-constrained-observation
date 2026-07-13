@@ -2,7 +2,7 @@
   "_meta": {
     "purpose": "Accumulating log of every EXP7 trial, one entry per run, identical structure per exp7_run_log_template.json. This is the raw data the replication protocol's success/failure criteria get evaluated against.",
     "protocol": "EXP7_replication_protocol.md v1.0",
-    "runs_completed": 9,
+    "runs_completed": 10,
     "runs_target_this_round": 10,
     "last_updated": "2026-07-13"
   },
@@ -296,6 +296,39 @@
       "second_scorer_agreement": null,
       "deviations_from_protocol": "This entire run is a deviation from locked v1.0 by design -- it is the first test of the Addendum v2 proposal, explicitly not part of the protocol's governed SC/CS condition set. stage2's checkpoint-per-call-only save behavior (not per-step) caused one full batch of 21 completed synthesis steps to be lost to a 280s timeout before this run succeeded with smaller batches -- logged as a pipeline inefficiency worth fixing (checkpoint should save incrementally, not just at the end of each invocation), not a scientific deviation.",
       "notes": "First empirical test of the object-permanence registry proposed in EXP7_protocol_addendum_v2_givens.md, run on REPL-006's exact clip and frame reports for direct comparability. Result: a genuine but partial improvement. The registry approach fixed destination-tracking (mouse vs. monitor) and replaced confident-wrong conclusions with calibrated uncertainty, but did not fix the specific object-permanence failure it was designed to target -- the toy-to-mask identity split was reorganized (folded into the hand's arc instead of floating free) rather than resolved (recognized as the same object). Open question for any future iteration of the givens prompt: the current instruction asks the model to check 'could this be an existing entity in a new pose' only when a report doesn't match an entry, but does not force a per-report reconciliation pass across ALL active entities -- it may need to explicitly prompt 'which entity is most likely absent/missing right now, and could the new object be that entity in a new state' rather than only checking newly-introduced objects against the registry. Not yet tested. Do not pool this SC-GIVENS result with SC results (REPL-001 through REPL-006) under protocol v1.0 Section 6 -- different synthesis prompt, different condition, single N=1 result."
+    },
+    {
+      "run_id": "REPL-008",
+      "date": "2026-07-13",
+      "condition": "SC-JANUS",
+      "condition_note": "NOT a locked-protocol SC run. Uses SYNTHESIS_INTRO_JANUS, the proposal in EXP7_protocol_addendum_v3_janus.md (addendum, not adopted into v1.0). At each synthesis step, the model receives the frame-agent's text report AND the actual image for that frame, attached to the growing conversation -- backward-facing visual memory only, zero access to future frames. Same clip and same 22 frame-agent reports as REPL-006/REPL-007 (reused, not re-generated). Spacetime arm also reused verbatim from REPL-006. Preceded by an unlogged one-off prototype (janus_prototype.py, not part of the tracked pipeline) run on the same clip, which motivated writing this addendum and wiring --variant janus into the real pipeline; this REPL-008 entry is the first run produced by the actual committed pipeline code, run independently of the prototype. Must not be pooled with SC (REPL-001 through REPL-006) or SC-GIVENS (REPL-007) when evaluating protocol v1.0 Section 6 replication criteria.",
+      "clip_file": "IMG_4794.MOV",
+      "clip_duration_s": 3.52,
+      "clip_structure_notes": "Same as REPL-006/007: hand visibly holding alien puppet, moves it toward computer mouse, tips it over onto/near the mouse.",
+      "ground_truth_event": "A hand holds and moves the alien puppet toward a computer mouse, then makes the puppet fall over onto the mouse.",
+      "ground_truth_detail": "The alien toy has two eyes.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API for the frame-agent pass (identical reports to REPL-006/007); synthesis agent receives each frame's text report AND its actual image, attached to the growing conversation, using SYNTHESIS_INTRO_JANUS (backward-facing visual memory variant)",
+        "num_frames": 22,
+        "final_trace_summary": "Clean replication of the prototype's core win: object identity was correctly maintained throughout, explicitly rejecting the frame-agents' drift from 'toy' to 'tissue' to 'N95 mask' with direct visual evidence -- 'The frame-agent for Frame 13 again misidentifies it as a white crumpled tissue or paper... the large pale rounded shape... IS still the back of the plush alien toy's head... now even more clearly showing the stitching/seam lines.' Final object-tracking section correctly identifies the antenna wire as the specific visual feature that caused nine consecutive frame-agents to hallucinate a mask ('mistaking the wire for a mask nose wire') -- a level of diagnostic precision about the frame-agents' own failure mode that neither v1 nor givens produced. However, unlike the prototype run (which concluded the toy ended up 'near the mouse, never toward the monitor'), this run's final narrative reverted to a monitor-completion theory: 'rotated to face the monitor and rested on the desk surface... completing the Take me to your leader joke with the computer as the alien's leader.' It treats the mouse-contact reading as a possible frame-agent misidentification rather than confirming it. Real run-to-run variance on the destination/event-resolution axis, even with identical, reliable success on the object-identity axis.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned",
+        "confidence_at_violation_point": "n/a -- ends in a confident but likely incorrect destination claim (monitor) rather than a single named violation point"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all 22 frames at once via API, single call, hindsight-labeled -- REUSED VERBATIM from REPL-006 (unaffected by synthesis variant, no new API call made)",
+        "final_trace_summary": "Identical to REPL-006/007: maintained correct object identity throughout, correctly concluded the toy was tipped from upright to face-down ('the eager alien meets the computer desk and gets laid flat'). Does not explicitly name the mouse.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "This entire run is a deviation from locked v1.0 by design, same as REPL-007 -- first test of Addendum v3 through the actual tracked pipeline (a prior unlogged prototype script motivated the addendum but is not itself part of this log). No pipeline errors this run; stage2 completed in two batches (12 + 10 steps) within timeout limits, no lost progress.",
+      "notes": "Second empirical test of visual backward-memory as a fix for the object-permanence failure first isolated in REPL-006. The object-identity result replicated cleanly and independently through the real pipeline code (not just the prototype) -- this looks like a genuinely reliable fix for that specific failure mode, now demonstrated twice. But event accuracy as a whole did not replicate at 'correct' -- this run's final narrative got the object right and the destination wrong, where the prototype got both right. This suggests Janus's fix is specific to the object-permanence axis and does not, by itself, guarantee correct event resolution -- destination/narrative-arc errors appear to be a separate failure mode requiring its own fix, not automatically solved by visual continuity. Worth testing across more runs before concluding anything about reliability on that second axis. Do not pool this SC-JANUS result with SC (REPL-001 through REPL-006) or SC-GIVENS (REPL-007) results under protocol v1.0 Section 6 -- different synthesis approach, different condition, N=2 (prototype + this run) for SC-JANUS specifically, both on the same single clip."
     }
   ]
 }

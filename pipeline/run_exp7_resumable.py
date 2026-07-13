@@ -94,6 +94,29 @@ SYNTHESIS_INTRO_GIVENS = (
     "quietly revise your earlier commitment as if you'd always known."
 )
 
+SYNTHESIS_INTRO_JANUS = (
+    "You are the synthesis agent in a sequential-observation experiment. "
+    "You will receive a series of frame-agent text reports, ONE AT A TIME, "
+    "in true temporal order. Each report was written by an agent that saw "
+    "only that single frame and nothing else.\n\n"
+    "Unlike that frame-agent, YOU will also be shown the actual image of "
+    "each frame, alongside its text report, as it is revealed to you. "
+    "Every image you have already been shown remains visible to you as "
+    "the conversation continues — you have full visual memory of "
+    "everything already revealed. You do NOT have access to any frame "
+    "that has not yet been given to you. When a new report or image "
+    "seems to introduce something unfamiliar, compare it directly against "
+    "the actual prior images you have already seen — not just against "
+    "the text descriptions — before concluding it is a new object rather "
+    "than something already seen in a different pose, angle, or state.\n\n"
+    "After each report+image, before you are given the next one, you must "
+    "COMMIT to your current best account of what is happening and what "
+    "you expect next. If a later report contradicts your prior commitment, "
+    "say so explicitly and name the exact point where your expectation "
+    "was violated — do not quietly revise your earlier commitment as if "
+    "you'd always known."
+)
+
 BLOCK_MODEL_PROMPT = (
     "You are shown a sequence of {n} frames from a video, in temporal "
     "order, all at once. Produce an expectation-trace: for each frame, "
@@ -168,22 +191,37 @@ def stage2(args):
 
     variant = getattr(args, "variant", "v1") or ckpt.get("synthesis_variant", "v1")
     ckpt["synthesis_variant"] = variant
-    intro = SYNTHESIS_INTRO_GIVENS if variant == "givens" else SYNTHESIS_INTRO
+    if variant == "givens":
+        intro = SYNTHESIS_INTRO_GIVENS
+    elif variant == "janus":
+        intro = SYNTHESIS_INTRO_JANUS
+        if not getattr(args, "frames_dir", None):
+            print("--frames-dir is required for --variant janus (needs frame images)."); sys.exit(1)
+        frames_dir = Path(args.frames_dir)
+    else:
+        intro = SYNTHESIS_INTRO
 
     history = ckpt["synthesis_history"]
     if history is None:
+        ack = "Understood. Send me the first report and its image." if variant == "janus" else "Understood. Send me the first report."
         history = [{"role": "user", "content": intro},
-                    {"role": "assistant", "content": "Understood. Send me the first report."}]
+                    {"role": "assistant", "content": ack}]
     transcript = ckpt["synthesis_transcript"]
     i = ckpt["synthesis_step_idx"]
 
     steps_done_this_call = 0
     while i < n and steps_done_this_call < args.max_steps:
         r = reports[i]
-        user_turn = (
+        text = (
             f"REPORT {i+1} of {n} (from frame: {r['frame_file']}):\n\n{r['report']}\n\n"
-            "Commit to your current best account now, before seeing the next report."
+            + ("Here is the actual image for this frame. " if variant == "janus" else "")
+            + "Commit to your current best account now, before seeing the next report."
         )
+        if variant == "janus":
+            img_path = frames_dir / r["frame_file"]
+            user_turn = [b64_image(img_path), {"type": "text", "text": text}]
+        else:
+            user_turn = text
         history.append({"role": "user", "content": user_turn})
         msg = client.messages.create(model=MODEL, max_tokens=MAX_TOKENS, messages=history)
         text = "".join(b.text for b in msg.content if b.type == "text")
@@ -209,6 +247,12 @@ def stage2(args):
                 "distinct physical objects/entities you concluded were present, "
                 "and for each one, a one-line summary of what happened to it "
                 "across the video (its full state-change arc, if any)."
+            )
+        elif variant == "janus":
+            final_request += (
+                "\n\nAlso state plainly, in one sentence per object, what you now "
+                "believe happened to each distinct object you tracked across the "
+                "video, using your full visual memory of every frame shown."
             )
         history.append({"role": "user", "content": final_request})
         msg = client.messages.create(model=MODEL, max_tokens=MAX_TOKENS, messages=history)
@@ -241,12 +285,18 @@ def stage3(args):
 def assemble(args):
     ckpt = load_ckpt(args.checkpoint)
     variant = ckpt.get("synthesis_variant", "v1")
+    variant_label = {
+        "givens": " -- SC-GIVENS variant (proposal, see EXP7_protocol_addendum_v2_givens.md, NOT part of locked v1.0)",
+        "janus": " -- SC-JANUS variant (proposal, see EXP7_protocol_addendum_v3_janus.md, NOT part of locked v1.0)",
+    }.get(variant, "")
+    protocol_label = {
+        "givens": " + Addendum v2 (givens) proposal",
+        "janus": " + Addendum v3 (janus) proposal",
+    }.get(variant, "")
     results = {
         "_meta": {
-            "experiment": "EXP7 replication run (Condition SC: substrate-controlled)"
-                          + (" -- SC-GIVENS variant (proposal, see EXP7_protocol_addendum_v2_givens.md, NOT part of locked v1.0)"
-                             if variant == "givens" else ""),
-            "protocol": "EXP7_replication_protocol.md v1.0" + (" + Addendum v2 (givens) proposal" if variant == "givens" else ""),
+            "experiment": "EXP7 replication run (Condition SC: substrate-controlled)" + variant_label,
+            "protocol": "EXP7_replication_protocol.md v1.0" + protocol_label,
             "synthesis_variant": variant,
             "run_at_utc": datetime.now(timezone.utc).isoformat(),
             "model": MODEL,
@@ -270,7 +320,7 @@ if __name__ == "__main__":
     sub = p.add_subparsers(dest="stage", required=True)
 
     s1 = sub.add_parser("stage1"); s1.add_argument("--frames-dir", required=True); s1.add_argument("--checkpoint", required=True)
-    s2 = sub.add_parser("stage2"); s2.add_argument("--checkpoint", required=True); s2.add_argument("--max-steps", type=int, default=10); s2.add_argument("--variant", choices=["v1", "givens"], default=None, help="Synthesis prompt variant. Default (unset) = v1 (locked protocol prompt, unchanged). 'givens' = proposal in EXP7_protocol_addendum_v2_givens.md, run as separate SC-GIVENS condition, not a replacement.")
+    s2 = sub.add_parser("stage2"); s2.add_argument("--checkpoint", required=True); s2.add_argument("--max-steps", type=int, default=10); s2.add_argument("--variant", choices=["v1", "givens", "janus"], default=None, help="Synthesis prompt variant. Default (unset) = v1 (locked protocol prompt, unchanged). 'givens' = Addendum v2 proposal. 'janus' = Addendum v3 proposal (backward-facing visual memory; requires --frames-dir)."); s2.add_argument("--frames-dir", default=None, help="Required for --variant janus. Directory of frame images, same one used for stage1/stage3.")
     s3 = sub.add_parser("stage3"); s3.add_argument("--frames-dir", required=True); s3.add_argument("--checkpoint", required=True)
     s4 = sub.add_parser("assemble"); s4.add_argument("--checkpoint", required=True); s4.add_argument("--out", required=True); s4.add_argument("--run-id", default="REPL-XXX"); s4.add_argument("--clip-name", default="unknown.mov")
 
