@@ -2,7 +2,7 @@
   "_meta": {
     "purpose": "Accumulating log of every EXP7 trial, one entry per run, identical structure per exp7_run_log_template.json. This is the raw data the replication protocol's success/failure criteria get evaluated against.",
     "protocol": "EXP7_replication_protocol.md v1.0",
-    "runs_completed": 8,
+    "runs_completed": 9,
     "runs_target_this_round": 10,
     "last_updated": "2026-07-13"
   },
@@ -263,6 +263,39 @@
       "second_scorer_agreement": null,
       "deviations_from_protocol": "API key ran out of credit mid-run (before any stage1 calls succeeded); no partial checkpoint was produced since save happens only at stage completion. Craig added credit and the run proceeded normally from a clean stage1 restart -- frame extraction (already complete before the credit failure) did not need to be redone. No other deviations; standard motion-adaptive extraction, standard prompts (SYNTHESIS_INTRO v1.0, unmodified).",
       "notes": "This run is the direct motivating evidence for EXP7_protocol_addendum_v2_givens.md (proposal, not adopted). It isolates the failure mechanism more precisely than REPL-004/005: the hand (agent) was tracked correctly the entire time, ruling out simple agent-visibility as the explanatory variable proposed after REPL-005. What collapsed was object identity persistence across a pose change (upright toy -> flat/partially-occluded toy), which the current SYNTHESIS_INTRO has no explicit instruction to check for -- it is built around prediction-and-contradiction, not entity-registry maintenance. Spacetime arm notably outperformed sequential arm on this clip specifically because it did not fragment the toy's identity, a second data point (with REPL-005) of spacetime doing better than sequential on object continuity within a single view, which is a different axis than H5's original hindsight-confabulation claim and should not be conflated with it when evaluating protocol Section 6 replication criteria."
+    },
+    {
+      "run_id": "REPL-007",
+      "date": "2026-07-13",
+      "condition": "SC-GIVENS",
+      "condition_note": "NOT a locked-protocol SC run. Uses SYNTHESIS_INTRO_GIVENS, the proposal in EXP7_protocol_addendum_v2_givens.md (addendum, not adopted into v1.0). Same clip and same 22 frame-agent reports as REPL-006 (reused, not re-generated -- frame-agent pass is identical regardless of synthesis prompt). Spacetime arm also reused verbatim from REPL-006, since the block-model pass does not use SYNTHESIS_INTRO at all and is unaffected by this variant. Logged separately from the SC entries per Addendum v2 Section 5 -- must not be pooled with REPL-001 through REPL-006 when evaluating protocol v1.0 Section 6 replication criteria.",
+      "clip_file": "IMG_4794.MOV",
+      "clip_duration_s": 3.52,
+      "clip_structure_notes": "Same as REPL-006: hand visibly holding alien puppet, moves it toward computer mouse, tips it over onto/near the mouse.",
+      "ground_truth_event": "A hand holds and moves the alien puppet toward a computer mouse, then makes the puppet fall over onto the mouse.",
+      "ground_truth_detail": "The alien toy has two eyes.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API (identical reports to REPL-006), synthesis agent one report at a time using SYNTHESIS_INTRO_GIVENS (object-registry variant)",
+        "num_frames": 22,
+        "final_trace_summary": "Partial improvement over REPL-006's v1 sequential arm, not a fix. Correctly converged on the mouse (not the monitor) as the destination by Report 11, and explicitly self-audited its own lag: 'I was too slow to update. The mouse was likely the correct destination from Report 4 onward' -- this correction never happened in REPL-006's v1 trace, which fixated on the monitor throughout. Ended in calibrated uncertainty rather than confident denial: 'Likely placed near/on mouse and occluded... detected but never confirmed,' versus REPL-006's v1 trace flatly concluding the toy's resting position 'was never shown.' However, the core object-permanence failure persisted in a different shape: the final object registry still splits the event across two entities rather than one -- Obj-F (the plush toy) is logged as 'disappeared... likely occluded,' while the mask sightings are folded into Obj-G (the hand) as 'transitioned to holding/manipulating N95 mask,' rather than the registry recognizing Obj-F itself as the mask-described object in a new pose. The instruction to check 'existing entity in a new pose' before adding a new one did not fire on the actual toy-to-mask transition, where it mattered most.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned",
+        "confidence_at_violation_point": "n/a -- ends in explicit unresolved/ambiguous state rather than a single named violation point"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all 22 frames at once via API, single call, hindsight-labeled -- REUSED VERBATIM from REPL-006 (unaffected by synthesis variant, no new API call made)",
+        "final_trace_summary": "Identical to REPL-006: maintained correct object identity throughout, correctly concluded the toy was tipped from upright to face-down ('the eager alien meets the computer desk and gets laid flat'). Does not explicitly name the mouse.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "This entire run is a deviation from locked v1.0 by design -- it is the first test of the Addendum v2 proposal, explicitly not part of the protocol's governed SC/CS condition set. stage2's checkpoint-per-call-only save behavior (not per-step) caused one full batch of 21 completed synthesis steps to be lost to a 280s timeout before this run succeeded with smaller batches -- logged as a pipeline inefficiency worth fixing (checkpoint should save incrementally, not just at the end of each invocation), not a scientific deviation.",
+      "notes": "First empirical test of the object-permanence registry proposed in EXP7_protocol_addendum_v2_givens.md, run on REPL-006's exact clip and frame reports for direct comparability. Result: a genuine but partial improvement. The registry approach fixed destination-tracking (mouse vs. monitor) and replaced confident-wrong conclusions with calibrated uncertainty, but did not fix the specific object-permanence failure it was designed to target -- the toy-to-mask identity split was reorganized (folded into the hand's arc instead of floating free) rather than resolved (recognized as the same object). Open question for any future iteration of the givens prompt: the current instruction asks the model to check 'could this be an existing entity in a new pose' only when a report doesn't match an entry, but does not force a per-report reconciliation pass across ALL active entities -- it may need to explicitly prompt 'which entity is most likely absent/missing right now, and could the new object be that entity in a new state' rather than only checking newly-introduced objects against the registry. Not yet tested. Do not pool this SC-GIVENS result with SC results (REPL-001 through REPL-006) under protocol v1.0 Section 6 -- different synthesis prompt, different condition, single N=1 result."
     }
   ]
 }
