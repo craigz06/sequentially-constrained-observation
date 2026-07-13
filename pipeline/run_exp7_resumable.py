@@ -58,6 +58,42 @@ SYNTHESIS_INTRO = (
     "earlier commitment as if you'd always known."
 )
 
+SYNTHESIS_INTRO_GIVENS = (
+    "You are the synthesis agent in a sequential-observation experiment. "
+    "You will receive a series of frame-agent reports, ONE AT A TIME, in "
+    "the true temporal order they were captured. Each report was written "
+    "by an agent that saw only that single frame and nothing else — it "
+    "has no memory of prior frames and cannot know whether something it "
+    "describes is new or already-seen.\n\n"
+
+    "GIVENS FIRST. Before committing to any prediction, maintain a running "
+    "registry of distinct physical objects/entities you believe are "
+    "present in the scene (e.g. 'Object A: light-blue plush toy with "
+    "green shirt'). Update this registry after every report. This "
+    "registry is the fixed inventory you are tracking state changes "
+    "against — establish what exists before reasoning about what it is "
+    "doing.\n\n"
+
+    "When a new report describes something that does not obviously match "
+    "an existing registry entry, you must explicitly consider, in order, "
+    "before deciding it is a new object:\n"
+    "  1. Could this be an existing registry entry in a different pose, "
+    "orientation, or partial occlusion?\n"
+    "  2. Could this be an existing registry entry under different "
+    "lighting or camera angle?\n"
+    "  3. Only if neither is plausible, add it as a new registry entry.\n\n"
+
+    "State which of these you concluded, and why, every time a report "
+    "introduces an apparent discrepancy with the registry.\n\n"
+
+    "After maintaining the registry, COMMIT to your current best account "
+    "of what is happening and what you expect next. Do not hedge by "
+    "trying to account for information you don't have yet. If a later "
+    "report contradicts your prior commitment, say so explicitly and "
+    "name the exact point where your expectation was violated — do not "
+    "quietly revise your earlier commitment as if you'd always known."
+)
+
 BLOCK_MODEL_PROMPT = (
     "You are shown a sequence of {n} frames from a video, in temporal "
     "order, all at once. Produce an expectation-trace: for each frame, "
@@ -130,9 +166,13 @@ def stage2(args):
     reports = ckpt["frame_reports"]
     n = len(reports)
 
+    variant = getattr(args, "variant", "v1") or ckpt.get("synthesis_variant", "v1")
+    ckpt["synthesis_variant"] = variant
+    intro = SYNTHESIS_INTRO_GIVENS if variant == "givens" else SYNTHESIS_INTRO
+
     history = ckpt["synthesis_history"]
     if history is None:
-        history = [{"role": "user", "content": SYNTHESIS_INTRO},
+        history = [{"role": "user", "content": intro},
                     {"role": "assistant", "content": "Understood. Send me the first report."}]
     transcript = ckpt["synthesis_transcript"]
     i = ckpt["synthesis_step_idx"]
@@ -158,11 +198,19 @@ def stage2(args):
     ckpt["synthesis_step_idx"] = i
 
     if i >= n:
-        history.append({"role": "user", "content": (
+        final_request = (
             "All reports have now been given. Produce a final expectation-trace: "
             "a short summary of where, if anywhere, your committed expectations "
             "were violated, and at which report number you first detected it."
-        )})
+        )
+        if variant == "givens":
+            final_request += (
+                "\n\nAlso produce your FINAL OBJECT REGISTRY: the complete list of "
+                "distinct physical objects/entities you concluded were present, "
+                "and for each one, a one-line summary of what happened to it "
+                "across the video (its full state-change arc, if any)."
+            )
+        history.append({"role": "user", "content": final_request})
         msg = client.messages.create(model=MODEL, max_tokens=MAX_TOKENS, messages=history)
         final_text = "".join(b.text for b in msg.content if b.type == "text")
         transcript.append({"step": "final", "frame_file": None, "commitment": final_text})
@@ -192,10 +240,14 @@ def stage3(args):
 
 def assemble(args):
     ckpt = load_ckpt(args.checkpoint)
+    variant = ckpt.get("synthesis_variant", "v1")
     results = {
         "_meta": {
-            "experiment": "EXP7 replication run (Condition SC: substrate-controlled)",
-            "protocol": "EXP7_replication_protocol.md v1.0",
+            "experiment": "EXP7 replication run (Condition SC: substrate-controlled)"
+                          + (" -- SC-GIVENS variant (proposal, see EXP7_protocol_addendum_v2_givens.md, NOT part of locked v1.0)"
+                             if variant == "givens" else ""),
+            "protocol": "EXP7_replication_protocol.md v1.0" + (" + Addendum v2 (givens) proposal" if variant == "givens" else ""),
+            "synthesis_variant": variant,
             "run_at_utc": datetime.now(timezone.utc).isoformat(),
             "model": MODEL,
             "note": "Resumable/checkpointed driver; frame-agent pass parallelized (independent calls only). Synthesis pass remained strictly sequential.",
@@ -218,7 +270,7 @@ if __name__ == "__main__":
     sub = p.add_subparsers(dest="stage", required=True)
 
     s1 = sub.add_parser("stage1"); s1.add_argument("--frames-dir", required=True); s1.add_argument("--checkpoint", required=True)
-    s2 = sub.add_parser("stage2"); s2.add_argument("--checkpoint", required=True); s2.add_argument("--max-steps", type=int, default=10)
+    s2 = sub.add_parser("stage2"); s2.add_argument("--checkpoint", required=True); s2.add_argument("--max-steps", type=int, default=10); s2.add_argument("--variant", choices=["v1", "givens"], default=None, help="Synthesis prompt variant. Default (unset) = v1 (locked protocol prompt, unchanged). 'givens' = proposal in EXP7_protocol_addendum_v2_givens.md, run as separate SC-GIVENS condition, not a replacement.")
     s3 = sub.add_parser("stage3"); s3.add_argument("--frames-dir", required=True); s3.add_argument("--checkpoint", required=True)
     s4 = sub.add_parser("assemble"); s4.add_argument("--checkpoint", required=True); s4.add_argument("--out", required=True); s4.add_argument("--run-id", default="REPL-XXX"); s4.add_argument("--clip-name", default="unknown.mov")
 
