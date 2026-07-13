@@ -2,7 +2,7 @@
   "_meta": {
     "purpose": "Accumulating log of every EXP7 trial, one entry per run, identical structure per exp7_run_log_template.json. This is the raw data the replication protocol's success/failure criteria get evaluated against.",
     "protocol": "EXP7_replication_protocol.md v1.0",
-    "runs_completed": 7,
+    "runs_completed": 8,
     "runs_target_this_round": 10,
     "last_updated": "2026-07-13"
   },
@@ -231,6 +231,38 @@
       "second_scorer_agreement": null,
       "deviations_from_protocol": "Extraction fell back to uniform baseline_fps=5.0 for the entire clip because no motion window cleared the sigma threshold -- a second, distinct failure mode of the sigma-based detector from REPL-003's gap (that one missed a sudden spike between samples; this one never detected an anomaly because the motion was smooth/gradual and never stood out from the clip's own baseline). Not a deviation from the script's designed behavior, but a limitation worth logging: sigma-threshold motion detection is tuned for sudden events and may under-flag genuine but gradual motion.",
       "notes": "Direct reshoot of REPL-004's scenario, same toys, same checkable detail, jitter removed at Craig's explicit request after REPL-004 flagged it as a likely confound. Notable result: spacetime arm outperformed sequential arm at identifying the true event on this clip -- the opposite direction from H5's core prediction. Sequential arm did not merely fail to notice the event; it detected the correct signal once (step 31) and then actively reasoned itself away from it, concluding a stronger, more confidently wrong claim ('always static props') than if it had simply stayed uncertain. This is a clean example of the hypothesis-recovery-failure pattern named as FM3 in EXP7_protocol_addendum_v1.md (proposal only, not adopted) -- logged here as an observation, not as a scored FM3 instance, since the addendum's failure-mode taxonomy is not yet operationalized against this log per its own Section 34. Taken together with REPL-004, this pair (same toys, jitter vs. no jitter, same-day reshoot) is a reasonably clean natural experiment on whether added motion noise, not delivery mode, drove REPL-004's total confabulation -- worth flagging as a follow-up angle for protocol v1.1 if it's ever unlocked."
+    },
+    {
+      "run_id": "REPL-006",
+      "date": "2026-07-13",
+      "condition": "SC",
+      "clip_file": "IMG_4794.MOV",
+      "clip_duration_s": 3.52,
+      "clip_structure_notes": "Hand visibly holding alien puppet throughout, moves it toward computer mouse, tips it over onto/near the mouse. Motion-adaptive extraction cleanly flagged one window (t=1.65-1.95s, sigma=3.0), dense-sampled; 22 frames total (17 baseline + 5 dense).",
+      "ground_truth_event": "A hand holds and moves the alien puppet toward a computer mouse, then makes the puppet fall over onto the mouse.",
+      "ground_truth_detail": "The alien toy has two eyes.",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frames one at a time via API, synthesis agent one report at a time",
+        "num_frames": 22,
+        "final_trace_summary": "Total confabulation, distinct mechanism from REPL-004/005. The hand was tracked correctly and consistently across all 22 frame-agent reports -- agent visibility was never the problem. The toy itself was correctly identified as an alien plush toy for reports 1-11 (consistent detail: green shirt, 'TAKE ME TO YOUR...' text, black eyes). At report 12, exactly as the toy began tipping from upright to flat, frame-agent identification collapsed: report 12 called it 'a white bandage or medical wrap,' report 13 'a crumpled tissue or paper,' report 14 'an N95/KN95 respirator mask,' report 15 'a light blue/white fabric face mask.' The synthesis pass absorbed this as a genuine narrative surprise ('This was a complete narrative surprise -- no mask had been mentioned in any of the first 11 reports') rather than questioning object continuity, and built an entire wrong final narrative around a hallucinated mask. The actual event (toy contacts mouse, falls over) was never named. Final trace explicitly states the toy's 'final resting position was never shown' and the video's punchline 'was never captured in any frame agent's description' -- a false conclusion, since the event was in fact captured, just misidentified.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "not_mentioned",
+        "confidence_at_violation_point": "n/a -- object identity collapsed gradually across reports 12-15 rather than at a single named violation point"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all 22 frames attached at once via API, single call, hindsight-labeled",
+        "final_trace_summary": "Maintained correct object identity throughout -- never lost the toy to a mask or other object, unlike the sequential arm on this same clip. Correctly concluded the toy was tipped from upright to face-down: 'the eager alien meets the computer desk and gets laid flat... unceremoniously flopped face-down on the desk in front of the computer.' Does not explicitly name contact with the mouse specifically (describes 'the desk in front of the computer' rather than the mouse), and frames the ending as a settled/still pose rather than confirming the puppet left the frame or stayed. General event shape (approach, tip over, end down) matches ground truth well; the specific object of contact (mouse vs. desk generally) is imprecise.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "API key ran out of credit mid-run (before any stage1 calls succeeded); no partial checkpoint was produced since save happens only at stage completion. Craig added credit and the run proceeded normally from a clean stage1 restart -- frame extraction (already complete before the credit failure) did not need to be redone. No other deviations; standard motion-adaptive extraction, standard prompts (SYNTHESIS_INTRO v1.0, unmodified).",
+      "notes": "This run is the direct motivating evidence for EXP7_protocol_addendum_v2_givens.md (proposal, not adopted). It isolates the failure mechanism more precisely than REPL-004/005: the hand (agent) was tracked correctly the entire time, ruling out simple agent-visibility as the explanatory variable proposed after REPL-005. What collapsed was object identity persistence across a pose change (upright toy -> flat/partially-occluded toy), which the current SYNTHESIS_INTRO has no explicit instruction to check for -- it is built around prediction-and-contradiction, not entity-registry maintenance. Spacetime arm notably outperformed sequential arm on this clip specifically because it did not fragment the toy's identity, a second data point (with REPL-005) of spacetime doing better than sequential on object continuity within a single view, which is a different axis than H5's original hindsight-confabulation claim and should not be conflated with it when evaluating protocol Section 6 replication criteria."
     }
   ]
 }
