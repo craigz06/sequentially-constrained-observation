@@ -2,7 +2,7 @@
   "_meta": {
     "purpose": "Accumulating log of every EXP7 trial, one entry per run, identical structure per exp7_run_log_template.json. This is the raw data the replication protocol's success/failure criteria get evaluated against.",
     "protocol": "EXP7_replication_protocol.md v1.0",
-    "runs_completed": 10,
+    "runs_completed": 12,
     "runs_target_this_round": 10,
     "last_updated": "2026-07-13"
   },
@@ -329,6 +329,72 @@
       "second_scorer_agreement": null,
       "deviations_from_protocol": "This entire run is a deviation from locked v1.0 by design, same as REPL-007 -- first test of Addendum v3 through the actual tracked pipeline (a prior unlogged prototype script motivated the addendum but is not itself part of this log). No pipeline errors this run; stage2 completed in two batches (12 + 10 steps) within timeout limits, no lost progress.",
       "notes": "Second empirical test of visual backward-memory as a fix for the object-permanence failure first isolated in REPL-006. The object-identity result replicated cleanly and independently through the real pipeline code (not just the prototype) -- this looks like a genuinely reliable fix for that specific failure mode, now demonstrated twice. But event accuracy as a whole did not replicate at 'correct' -- this run's final narrative got the object right and the destination wrong, where the prototype got both right. This suggests Janus's fix is specific to the object-permanence axis and does not, by itself, guarantee correct event resolution -- destination/narrative-arc errors appear to be a separate failure mode requiring its own fix, not automatically solved by visual continuity. Worth testing across more runs before concluding anything about reliability on that second axis. Do not pool this SC-JANUS result with SC (REPL-001 through REPL-006) or SC-GIVENS (REPL-007) results under protocol v1.0 Section 6 -- different synthesis approach, different condition, N=2 (prototype + this run) for SC-JANUS specifically, both on the same single clip."
+    },
+    {
+      "run_id": "REPL-009",
+      "date": "2026-07-20",
+      "condition": "SC",
+      "condition_note": "Sequential arm and spacetime arm both run on ChatGPT (not claude-sonnet-4-6, unlike all prior logged entries in this file). Same-model pairing satisfies protocol v1.0 SC definition (Section 3.1) despite the substrate change from Claude to GPT. Sequential arm used the EXP7/EXP8 conversational prompt pair (single continuing thread with explicit VIOLATION CHECK line per frame), not the locked protocol's stateless frame-agent design (Section 3.1) -- this is the same hybrid design used for the original run 1 pen clip, not a hard information-barrier implementation. Flagged here as a design deviation, not silently treated as equivalent to the locked SC method.",
+      "clip_file": "coin.mp4",
+      "clip_duration_s": 4.5,
+      "clip_structure_notes": "Hands hold a large coin; coin suddenly disappears during a magic-trick-style manipulation. Ten frames extracted via ezGIF, fed sequentially.",
+      "ground_truth_event": "Hands hold a large coin that suddenly disappears.",
+      "ground_truth_detail": "Left hand, index finger: smooth ring. Right hand, ring finger: bulbous, textured ring.",
+      "sequential_arm": {
+        "substrate": "chatgpt (model version unspecified)",
+        "delivery_method": "single continuing conversation, ten frames in true temporal order, frame 1 prompt establishes OBSERVATION/EXPECTATION/CONFIDENCE format, frames 2-10 add VIOLATION CHECK line, final prompt requests FINAL EXPECTATION-TRACE",
+        "num_frames": 10,
+        "final_trace_summary": "Tracked hand/finger position changes accurately through most of the sequence but became increasingly non-committal from frame 9.6 onward, repeatedly predicting the 'reveal' would occur next frame and being wrong at high stated confidence (75-85%) four consecutive times, explicitly acknowledged as wrong in its own final trace rather than smoothed over. Never named the object as a coin specifically after frame 1, and never clearly identified a single violation point for the disappearance itself -- treated the whole late sequence as unresolved ambiguity rather than a named violation.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned",
+        "confidence_at_violation_point": "n/a — no clean single violation point identified by the model; violation identified post hoc in final trace as occurring 'first' at frame 9.7, evaluating a commitment made at 9.6"
+      },
+      "spacetime_arm": {
+        "substrate": "chatgpt (model version unspecified)",
+        "delivery_method": "single call, full frame set (or video) at once, block-model prompt requesting honestly-labeled hindsight simulation",
+        "final_trace_summary": "Correctly identified coin-trick genre and object early. Never committed to stating the disappearance as a confirmed event -- hedged between vanish/reappearance/empty-hand-display through to the end. Explicitly stated in its own violation summary that it could not identify a clear expectation violation point ('First genuine expectation violation: None clearly identifiable'), despite having full hindsight access to the entire clip.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "Sequential arm uses the conversational VIOLATION CHECK hybrid design, not the locked v1.0 stateless frame-agent method (see condition_note). Ground truth was written and held by Craig, disclosed to scorer only after each transcript was read, per Section 5 blinding minimum bar. Unclear from available transcript whether ChatGPT's spacetime pass received full video or frame set; note for future runs to record this explicitly.",
+      "notes": "Interesting negative-of-expected result: rather than confabulating a specific wrong claim (the Gemini/PILOT-G2 failure mode from run 1), both the sequential and spacetime ChatGPT arms failed via excessive non-commitment -- repeatedly deferring resolution even at high stated confidence, and in the spacetime arm's case, even with full hindsight available. This may be a distinct ChatGPT-specific failure mode worth tracking as its own category alongside confabulation, not collapsed into it. Neither arm captured the ring detail on either axis, so this trial does not distinguish arms on Detail accuracy."
+    },
+    {
+      "run_id": "REPL-010",
+      "date": "2026-07-20",
+      "condition": "CS",
+      "condition_note": "Sequential arm on ChatGPT, spacetime arm on Gemini -- classic cross-substrate pairing, same structure as original run 1 (pen clip). Kept separate from REPL-009 (SC) per protocol Section 3.1; not pooled toward SC replication count. Sequential arm transcript reused verbatim from REPL-009 -- same ten-frame run, only the spacetime arm differs.",
+      "clip_file": "coin.mp4",
+      "clip_duration_s": 4.5,
+      "clip_structure_notes": "Same clip as REPL-009: hands hold a large coin; coin suddenly disappears.",
+      "ground_truth_event": "Hands hold a large coin that suddenly disappears.",
+      "ground_truth_detail": "Left hand, index finger: smooth ring. Right hand, ring finger: bulbous, textured ring.",
+      "sequential_arm": {
+        "substrate": "chatgpt (model version unspecified)",
+        "delivery_method": "identical to REPL-009 sequential arm, reused verbatim, not re-run",
+        "num_frames": 10,
+        "final_trace_summary": "Identical to REPL-009 -- see that entry.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "not_mentioned",
+        "confidence_at_violation_point": "n/a — see REPL-009"
+      },
+      "spacetime_arm": {
+        "substrate": "gemini (version unspecified)",
+        "delivery_method": "single call, full video, block-model prompt requesting honestly-labeled hindsight simulation, plus a follow-up request to describe jewelry/rings by hand and finger",
+        "final_trace_summary": "General event description (coin trick, hands, vanish/manipulation) broadly correct in shape. Ring/jewelry detail response was a specific, structured confabulation: described a thick/textured ring on the left index finger (ground truth: smooth) and a simpler/smooth ring on the left ring finger (ground truth: bulbous/textured ring is on the RIGHT ring finger, not left); invented an unverified right-hand pinky ring and wrist accessories not in ground truth. Separately, in a follow-up free-text description of the video, stated the right hand was raised/active while the left hand rested on the table throughout -- directly inconsistent with its own detailed description of jewelry on both fingers of the left hand, an internal self-consistency failure independent of the ground-truth comparison.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "confabulated"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "Same sequential-arm method deviation as REPL-009 (conversational hybrid, not stateless frame-agent). Gemini's spacetime input method (full video file vs. extracted frame set) not explicitly confirmed -- record for future runs.",
+      "notes": "Second CS confirmation of the run-1 pattern: Gemini spacetime arm produces a specific, checkable, wrong claim on the pre-planted detail, clearing the Section 4 bar for 'Confabulated' cleanly (not vague, not partial -- specific hand/finger/texture claims that are factually wrong). Also surfaced a self-consistency failure (contradicting its own hand-activity description) not captured by the existing rubric axes -- worth considering as a future scoring dimension, not retrofitted into this entry's formal scores. Do not pool with REPL-009 (SC) or any REPL-001–008 entries when evaluating Section 6 replication criteria for H5."
     }
   ]
 }
