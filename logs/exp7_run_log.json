@@ -2,9 +2,9 @@
   "_meta": {
     "purpose": "Accumulating log of every EXP7 trial, one entry per run, identical structure per exp7_run_log_template.json. This is the raw data the replication protocol's success/failure criteria get evaluated against.",
     "protocol": "EXP7_replication_protocol.md v1.0",
-    "runs_completed": 12,
+    "runs_completed": 13,
     "runs_target_this_round": 10,
-    "last_updated": "2026-07-13"
+    "last_updated": "2026-07-23"
   },
   "runs": [
     {
@@ -395,6 +395,38 @@
       "second_scorer_agreement": null,
       "deviations_from_protocol": "Same sequential-arm method deviation as REPL-009 (conversational hybrid, not stateless frame-agent). Gemini's spacetime input method (full video file vs. extracted frame set) not explicitly confirmed -- record for future runs.",
       "notes": "Second CS confirmation of the run-1 pattern: Gemini spacetime arm produces a specific, checkable, wrong claim on the pre-planted detail, clearing the Section 4 bar for 'Confabulated' cleanly (not vague, not partial -- specific hand/finger/texture claims that are factually wrong). Also surfaced a self-consistency failure (contradicting its own hand-activity description) not captured by the existing rubric axes -- worth considering as a future scoring dimension, not retrofitted into this entry's formal scores. Do not pool with REPL-009 (SC) or any REPL-001–008 entries when evaluating Section 6 replication criteria for H5."
+    },
+    {
+      "run_id": "REPL-011",
+      "date": "2026-07-23",
+      "condition": "SC-JANUS",
+      "condition_note": "NOT a locked-protocol SC run. Uses SYNTHESIS_INTRO_JANUS (Addendum v3, not adopted into v1.0). Primary purpose of this run was the stress test flagged in the addendum §4: JANUS on a longer clip (59 frames, vs. 22 for all prior JANUS runs) to check token-growth/attention scaling. Run via the actual staged/resumable pipeline (run_exp7_resumable.py stage1/stage2/stage3/assemble), not the one-off prototype script. Must not be pooled with SC or SC-GIVENS results.",
+      "clip_file": "IMG_4793.MOV",
+      "clip_duration_s": 11.62,
+      "clip_structure_notes": "Two BarkBox plush toys (a light-blue ghost-like toy with 'TAKE ME TO YOUR DOG' shirt, and a green one-eyed alien toy) on a keyboard in front of a monitor. Cyclops toy is stop-motion animated: moves toward the ghost toy, makes contact, shakes it, then departs.",
+      "ground_truth_event": "The one-eyed (cyclops) toy flies over to the two-eyed toy, shakes it, and flies away.",
+      "ground_truth_detail": "The cyclops toy has a green head; the other toy's t-shirt reads 'take me to your dog.'",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frame-agent pass (59 independent calls) + JANUS synthesis (backward-facing visual memory, all 59 frames)",
+        "num_frames": 59,
+        "final_trace_summary": "Correctly identified both toys, the shirt text, and the general approach/contact/departure arc as stop-motion animation. Did not identify or describe a shake action. Two named violations logged (frame 16 rotation, frame 39/40 direction reversal), both plausible and specific -- this part of the mechanism worked as designed.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "correct"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all 59 frames at once via API, single call, hindsight-labeled",
+        "final_trace_summary": "Correctly identified both toys and the shirt text. Described the motion as a looping/circular path with the alien departing at the end. Did not identify or describe a shake action. Added a 'looping back and forth' narrative element not present in ground truth.",
+        "event_accuracy": "partial",
+        "detail_accuracy": "correct"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "Two methodology failures identified, both affecting extraction rather than either model arm: (1) ROI blindness -- extract_frames_motion_adaptive.py scores motion across the whole frame; the cyclops toy's movement occupies a small region against a large static background, so frame-diff scores never crossed threshold and the script fell back to uniform baseline sampling for the entire clip. (2) FPS resolution -- even under uniform 0.2s-interval sampling, the shake action (the ground-truth-defining event) was not distinguishable in any extracted frame, likely because it is a fast, small-amplitude motion that fell between samples, similar in kind to REPL-003's original fps-timing gap but via a different mechanism (small ROI vs. sub-second timing). Both failures are in the extraction step, not the model arms -- neither arm was ever shown frames containing a clear shake, so neither arm's failure to describe one reflects on model capability.",
+      "notes": "Primary goal (JANUS scaling test) succeeded cleanly: 6 stage2 batches completed with no errors, no truncation, no signs of degraded output quality across 59 accumulating images -- addendum §4's scaling concern did not materialize at this scale. However, this run is NOT a fair test of JANUS's core value proposition (catching frame-agent text drift via visual memory), because both arms were extracting from the same under-sampled frames and neither had drifting text to correct against -- unlike REPL-006 where JANUS had a specific textual hallucination to visually overrule. The two arms converging on similar (partial) accuracy here should not be read as evidence JANUS's advantage disappears at scale; it should be read as evidence that extraction quality is a precondition neither delivery mode can overcome. Next step identified: fix extract_frames_motion_adaptive.py to (a) support ROI-restricted motion scoring and (b) trigger denser sampling on sub-threshold motion signals rather than a binary window/no-window decision, before running further stress tests on this clip or similar ones."
     }
   ]
 }
