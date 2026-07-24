@@ -2,9 +2,9 @@
   "_meta": {
     "purpose": "Accumulating log of every EXP7 trial, one entry per run, identical structure per exp7_run_log_template.json. This is the raw data the replication protocol's success/failure criteria get evaluated against.",
     "protocol": "EXP7_replication_protocol.md v1.0",
-    "runs_completed": 13,
+    "runs_completed": 14,
     "runs_target_this_round": 10,
-    "last_updated": "2026-07-23"
+    "last_updated": "2026-07-24"
   },
   "runs": [
     {
@@ -427,6 +427,45 @@
       "second_scorer_agreement": null,
       "deviations_from_protocol": "Two methodology failures identified, both affecting extraction rather than either model arm: (1) ROI blindness -- extract_frames_motion_adaptive.py scores motion across the whole frame; the cyclops toy's movement occupies a small region against a large static background, so frame-diff scores never crossed threshold and the script fell back to uniform baseline sampling for the entire clip. (2) FPS resolution -- even under uniform 0.2s-interval sampling, the shake action (the ground-truth-defining event) was not distinguishable in any extracted frame, likely because it is a fast, small-amplitude motion that fell between samples, similar in kind to REPL-003's original fps-timing gap but via a different mechanism (small ROI vs. sub-second timing). Both failures are in the extraction step, not the model arms -- neither arm was ever shown frames containing a clear shake, so neither arm's failure to describe one reflects on model capability.",
       "notes": "Primary goal (JANUS scaling test) succeeded cleanly: 6 stage2 batches completed with no errors, no truncation, no signs of degraded output quality across 59 accumulating images -- addendum §4's scaling concern did not materialize at this scale. However, this run is NOT a fair test of JANUS's core value proposition (catching frame-agent text drift via visual memory), because both arms were extracting from the same under-sampled frames and neither had drifting text to correct against -- unlike REPL-006 where JANUS had a specific textual hallucination to visually overrule. The two arms converging on similar (partial) accuracy here should not be read as evidence JANUS's advantage disappears at scale; it should be read as evidence that extraction quality is a precondition neither delivery mode can overcome. Next step identified: fix extract_frames_motion_adaptive.py to (a) support ROI-restricted motion scoring and (b) trigger denser sampling on sub-threshold motion signals rather than a binary window/no-window decision, before running further stress tests on this clip or similar ones."
+    },
+    {
+      "run_id": "REPL-012",
+      "date": "2026-07-24",
+      "condition": "SC-JANUS",
+      "condition_note": "NOT a locked-protocol SC run. Uses SYNTHESIS_INTRO_JANUS (Addendum v3). Extraction method deviates from both prior methods: dense frame-by-frame coverage (frames 59-94, every frame) plus baseline-fps sampling elsewhere, using a NEW human-identified ROI script (extract_frames_manual_roi.py) built specifically in response to REPL-011's diagnosed extraction gaps. No automated motion detection was used for this run.",
+      "clip_file": "truvia.mov",
+      "clip_duration_s": 4.21,
+      "clip_structure_notes": "A hand with a bandaid on the index finger enters frame, picks up and progressively occludes a green-lidded Truvia sweetener jar, and knocks it off the table/counter.",
+      "ground_truth_event": "A hand with a bandaid on the index finger enters the scene and knocks a green Truvia bottle off the table.",
+      "ground_truth_detail": "The hand has a bandaid on its index finger; the bottle is green and labeled 'Truvia.'",
+      "sequential_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "stateless frame-agent pass + JANUS synthesis (backward-facing visual memory, all frames)",
+        "num_frames": 54,
+        "final_trace_summary": "Split the single Truvia jar into two distinct objects across the trace: an early 'large, white/opaque, green-lid Truvia container' and a later 'small green-lidded transparent jar,' treating them as two separate items with two separate fates, rather than recognizing continuity through progressive hand-occlusion. Root cause (confirmed by human review of the source frames): as the hand increasingly occludes the jar, the visible fragment (a thin green/white sliver) no longer visually resembles the earlier full view, and the model does not infer these are the same object partially hidden by the hand now in front of it. This is a continuity-through-occlusion failure, distinct from REPL-006/007/008's perceptual-drift failure (where JANUS succeeded by grounding text claims against actual pixels) -- here the individual frame reads may be locally accurate, but the model fails to infer persistent identity across an occlusion event. Final trace does not mention the bandaid at all, despite it being clearly visible in early frames. No knock-off/fall event described at all -- narrative ends with the jar(s) carried off-frame.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "not_mentioned"
+      },
+      "spacetime_arm": {
+        "substrate": "claude-sonnet-4-6",
+        "delivery_method": "all frames at once via API, single call, hindsight-labeled",
+        "final_trace_summary": "Describes the jar being picked up, rotated/examined, and carried off-frame to the left. Correctly identifies the bandaid on the hand (though adds an unconfirmed 'silicone ring' detail not part of ground truth). No knock-off/fall event described -- narrative treats the removal as deliberate and examined, not accidental.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "correct"
+      },
+      "cross_substrate_informal": {
+        "model": "gemini (consumer web interface, no API, full video handed directly, no frame extraction)",
+        "note": "Not a formal Condition CS per protocol §3.1 (which pairs sequential-on-one-model with frame-based spacetime-on-another) -- this is a looser, third comparison point: full raw video, zero frame-based scaffolding, zero sequential constraint.",
+        "final_trace_summary": "Correctly and specifically identified the bandaid (finger and description matched closely). Never mentioned the Truvia bottle at all. Asserted the room was 'completely static' with 'nothing further moves' after the hand briefly appeared and withdrew -- a confident, specific claim that directly contradicts the actual event, rather than an omission.",
+        "event_accuracy": "confabulated",
+        "detail_accuracy": "partial"
+      },
+      "scorer": "Craig + Claude (this session)",
+      "blinded": true,
+      "second_scorer": null,
+      "second_scorer_agreement": null,
+      "deviations_from_protocol": "New extraction method (manual human-identified ROI, extract_frames_manual_roi.py) replaces automated motion detection for this run -- built in direct response to REPL-011. One baseline frame near clip end failed extraction (ffmpeg edge case at t=4.20s, clip duration 4.21s) and is logged in the frame manifest's failed_frames field rather than silently dropped; does not affect the dense ROI window (frames 59-94), which has full frame-by-frame coverage. Informal third-arm Gemini comparison added outside the locked protocol's CS definition -- flagged as such, not pooled with SC or formal CS data.",
+      "notes": "All three arms (Claude JANUS, Claude block-model, Gemini full-video) failed to describe the actual event (a knock/fall) -- a genuine, informative negative result, not a methodology failure this time (the dense ROI window has full coverage of frames 59-94 where the event was identified). The two Claude arms diverge in kind: block-model treats the jar as deliberately picked up and carried off, correctly retains the bandaid detail, and stays as one continuous object. JANUS's synthesis, despite having full backward visual memory, fails to maintain object continuity through progressive hand-occlusion -- splitting one physical jar into two distinct 'objects' as the visible fragment changes shape/size behind the hand, and loses the bandaid detail entirely from its final summary despite it being visible in raw frames (confirmed by human review of F055/F076/F086/F088). This is a new, distinct failure mode from the perceptual-drift problem JANUS was built to solve (REPL-006/007/008): the individual frame-level reads may be locally accurate, but the model does not infer persistent identity across an occlusion event -- a reasoning/inference gap rather than a perception gap. Worth testing explicitly in future runs: does prompting the synthesis agent to reason directly about occlusion/continuity ('is this the same object, now partially hidden?') fix this, or does it require a different mechanism entirely from JANUS's current backward-image-attachment design?"
     }
   ]
 }

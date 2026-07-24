@@ -1,0 +1,85 @@
+Here is my best attempt at a hindsight-informed expectation trace, simulating sequential viewing:
+
+---
+
+**Frame 1:** A Truvia sweetener jar sits prominently on a dark granite countertop, close to the camera. A white mechanical keyboard and a 3D printer (with filament spools) are visible in the background. A hand is partially visible at the left edge. *Expectation: The hand will pick up or interact with the jar.*
+
+**Frame 2:** Same scene, hand still partially visible. Jar remains in place. *Expectation: Hand will move toward the jar soon.*
+
+**Frame 3:** The jar appears slightly lower in frame — possibly being set down or tilted. Hand more visible. *Expectation: Someone is about to pick up or move the jar.*
+
+**Frame 4:** A hand is now clearly visible, flat on the counter, with the jar visible behind it. The hand has a bandage on one finger and what appears to be a silicone ring. *Expectation: The hand will grasp the jar.*
+
+**Frame 5:** The jar is now upright and clearly visible, hand below it. *Expectation: Hand will lift the jar.*
+
+**Frame 6:** Similar to frame 5, jar stable. *Expectation: Continued interaction with the jar.*
+
+**Frame 7:** Hand appears to be moving, jar still visible. *Expectation: Jar will be picked up or slid.*
+
+**Frame 8:** Hand is gripping or near the jar, jar slightly shifted. *Expectation: Jar being moved.*
+
+**Frame 9:** Hand firmly on the jar, jar appears to be rotating or being lifted. *Expectation: Jar will be picked up.*
+
+**Frame 10:** Hand clearly holding the jar. *Expectation: Jar will be lifted off counter.*
+
+**Frame 11:** Hand gripping jar, appears to be raising it. *Expectation: Jar moving upward.*
+
+**Frame 12:** Hand and jar, jar appears to be tilting. *Expectation: Jar being rotated or examined.*
+
+**Frame 13:** Jar tilting further, hand firm. *Expectation: Person is rotating the jar to read the label.*
+
+**Frame 14:** Jar clearly tilted/rotated. *Expectation: Continues rotating.*
+
+**Frame 15:** Jar further rotated. *Expectation: Will continue rotating or be set down.*
+
+**Frame 16:** Jar continuing to rotate, label becoming more visible. *Expectation: Person examining label, may set jar down.*
+
+**Frame 17:** Jar still rotating in hand. *Expectation: Rotation slowing, jar may be set down.*
+
+**Frame 18:** Jar appears nearly horizontal or significantly tilted. *Expectation: Will be set down or further examined.*
+
+**Frame 19:** Jar significantly tilted, hand still gripping. *Expectation: Jar being moved away from camera.*
+
+**Frame 20:** Jar moving away from camera/lower in frame. *Expectation: Jar being set down or moved off-screen to the left.*
+
+**Frame 21:** Jar moving further left and down. *Expectation: Jar will leave frame.*
+
+**Frame 22:** Jar nearly out of frame, hand still visible. *Expectation: Jar will disappear from frame entirely.*
+
+**Frame 23:** Jar almost gone, hand retreating left. *Expectation: Jar will be fully out of frame.*
+
+**Frame 24:** Jar gone or barely visible at edge, hand still in frame. *Expectation: Hand will also leave frame.*
+
+**Frame 25:** Hand still visible but moving away. *Expectation: Hand will exit frame, revealing clean countertop view.*
+
+**Frame 26:** Hand partially visible, counter largely clear. *Expectation: Hand exits, scene stabilizes.*
+
+**Frame 27:** Hand still lingering at bottom/left of frame. *Expectation: Hand will fully exit.*
+
+**Frame 28:** Similar — hand at bottom of frame. *Expectation: Hand exiting.*
+
+**Frame 29:** Hand still present at lower portion. *Expectation: Will exit soon.*
+
+**Frame 30:** Hand still in frame. *Slight violation of expectation — taking longer than expected to exit.*
+
+**Frame 31:** Hand still visible. *Expectation: Will exit this frame or next.*
+
+**Frame 32:** Hand still at bottom. *Expectation: Nearly gone.*
+
+**Frame 33:** Hand fading from view. *Expectation: Will be fully gone next frame.*
+
+**Frame 34:** Hand mostly gone. *Expectation: Clean countertop shot incoming.*
+
+**Frame 35:** Counter largely clear, hand barely visible. *Expectation: Scene will stabilize on empty counter + background.*
+
+**Frame 36:** Clean view of counter and room. *Expectation: This is the ending composition — video likely ending.*
+
+**Frame 37:** Clean shot continues. *Expectation: Video ending or cut incoming.*
+
+**Frame 38–54:** Clean, stable shots of the countertop with keyboard and 3D printer visible in background, no jar, no hand. *Expectation confirmed: The video has ended its action sequence and is holding on a stable wide shot of the workspace. No further violation of expectations.*
+
+---
+
+**Summary of notable expectation violations:**
+- **Frames 28–34:** The hand lingered in frame significantly longer than expected after the jar was moved away, mildly violating the expectation that it would exit quickly.
+- Otherwise, the sequence was fairly predictable: a hand picks up and rotates/moves a Truvia jar, then carries it off-screen, leaving a clean view of a home office/workshop workspace.

@@ -295,6 +295,8 @@ def assemble(args):
     }.get(variant, "")
     results = {
         "_meta": {
+            "run_id": args.run_id,
+            "clip_name": args.clip_name,
             "experiment": "EXP7 replication run (Condition SC: substrate-controlled)" + variant_label,
             "protocol": "EXP7_replication_protocol.md v1.0" + protocol_label,
             "synthesis_variant": variant,

@@ -1,0 +1,29 @@
+## FINAL EXPECTATION-TRACE
+
+### Violations of Committed Expectations
+
+1. **Frame 1→2 (detected at Report 2):** Minor — I predicted the container would fully land/settle upright. It remained in nearly the same tilted position. *Mild violation, quickly absorbed.*
+
+2. **Frame 4→5 (detected at Report 5):** I predicted the hand would move toward the keyboard. Instead it largely withdrew and the container sat freestanding. *Mild violation.*
+
+3. **Frame 11 (detected at Report 11):** I had predicted the hand would reach the **keyboard**. It reached the **mouse** instead. *Named violation — first clear directional error.*
+
+4. **Frames 13-15 (detected at Report 15):** I interpreted the small green object appearing in Frame 13 as the **Truvía lid separated from the large container**. It was in fact a **separate, smaller green-lidded container** (transparent body, green screw cap). This was my most significant object-identity error, first clearly detected at Report 15.
+
+5. **Frames 38-43 (detected at Report 42):** I repeatedly predicted the hand would reach the keyboard. It never did — it remained stationary near the camera for ~8 frames before withdrawing entirely. *Repeated failed prediction, explicitly acknowledged at Report 42.*
+
+---
+
+### Object-by-Object Fate Summary
+
+**Truvía sweetener container (large, white/opaque body, green lid):** Carried into frame by the elderly person's hand and set down upright on the granite counter in the left foreground during frames 1-5, then gradually moved out of frame to the left as subsequent frames zoomed in on the hand and secondary container, and was never seen again after approximately frame 32.
+
+**Small green-lidded transparent jar/bottle (secondary container):** Present near the mouse/mousepad area from approximately frame 13 onward, held and examined by the elderly hand for many frames (13-31) with an amber/brown object briefly visible inside it, then carried leftward off-frame as the hand moved back across the counter, and never returned to view.
+
+**Elderly person's hand:** Entered frame in Frame 1 holding the Truvía container, set it down, traversed the counter rightward to the mouse area, picked up the small green jar, traversed leftward and rightward multiple times across the counter leaving white powder visible, then rested stationary at the bottom-left corner near the camera for frames ~37-44 before withdrawing entirely from the frame.
+
+**White mechanical keyboard:** Remained stationary on the right side of the granite counter throughout all 54 frames and was never touched or used by the person.
+
+**3D printer (orange/black, Prusa-style, red and yellow filament spools):** Remained completely idle on the background workbench throughout all 54 frames, never printing and never touched.
+
+**White powder on granite counter:** Visible as pre-existing or early-spilled residue from approximately frame 29 onward, spread across the dark granite in irregular patches and streaks, and remained uncleaned through the final frame.
