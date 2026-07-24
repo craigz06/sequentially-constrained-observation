@@ -5,7 +5,7 @@
     "companion_file": "sco_dci_state.json (engineering/config state)",
     "supersedes": "sco_research_memory_v3_2.json",
     "generated": "2026-07-09",
-    "revised": "2026-07-13 (v3.3) - Added literature_grounding and failure_mode_taxonomy sections, sourced from a Craig-provided conversation transcript (external AI critique + synthesis) rather than conversation_search. Two confounds (self-report gaming, narrative misdirection) identified as gaps in EXP7_replication_protocol.md v1.0. Protocol v1.0 remains LOCKED and was NOT edited; a separate addendum document (EXP7_protocol_addendum_v1.md) proposes changes for a future v1.1 unlock decision.",
+    "revised": "2026-07-24 (v3.3) - Added H7 (entity individuation as the tracking bottleneck) to hypotheses and FM5 (re-identification failure under partial coverage) to failure_mode_taxonomy, both motivated by REPL-012 (truvia.mov, SC-JANUS) and its corrected finding that the jar-splitting failure was a re-identification error under partial hand-coverage, not object-permanence-through-occlusion. Prior revision note (2026-07-13, literature_grounding + FM1-FM4) retained below in version history: literature_grounding and failure_mode_taxonomy sections were added then, sourced from a Craig-provided conversation transcript (external AI critique + synthesis) rather than conversation_search. Two confounds (self-report gaming, narrative misdirection) identified as gaps in EXP7_replication_protocol.md v1.0. Protocol v1.0 remains LOCKED and was NOT edited; a separate addendum document (EXP7_protocol_addendum_v1.md) proposes changes for a future v1.1 unlock decision.",
     "method": "assembled from conversation_search over past Claude sessions; provenance and confidence tagged per entry",
     "confidence_key": {
       "established": "stress-tested across multiple sessions, survived explicit attempts to break it",
@@ -145,6 +145,20 @@
         "D8",
         "EXP4",
         "Q5"
+      ]
+    },
+    {
+      "id": "H7",
+      "name": "Entity individuation as the tracking bottleneck",
+      "statement": "Object-tracking failures observed in EXP7 (REPL-004 through REPL-012) stem primarily from a lack of entity individuation prior to observation -- the model has no standing concept of 'this is one persistent thing' before parsing pixels frame to frame -- rather than from insufficient temporal/frame resolution or from sequential (vs. spacetime) delivery mode as such. REPL-012 showed dense, human-verified full-coverage frames (every frame, 59-94) still failed to prevent object fragmentation (one jar split into two) under JANUS (full backward visual memory). An informal pilot seeding a spacetime arm (Gemini, fresh conversation) with a structured seed_objects block naming the scene's entities in advance produced the first fully correct account across all of today's trials -- correct event, correct entity persistence, correct audio detail -- suggesting the fix is upstream of both frame density and delivery mode.",
+      "status": "open",
+      "date_first_documented": "2026-07-24",
+      "date_confidence": "high",
+      "falsification_criteria": "If seeding the same structured object inventory into a sequential (JANUS) arm on the same clip does NOT improve event/detail accuracy relative to unseeded JANUS (REPL-012), while seeded spacetime continues to succeed, this hypothesis is falsified in favor of a delivery-mode-specific explanation instead of a general individuation explanation.",
+      "falsification_status": "untested -- seeded-JANUS trial on truvia.mov not yet run",
+      "related_ids": [
+        "FM5",
+        "H5"
       ]
     }
   ],
@@ -690,6 +704,19 @@
           "LG3",
           "EXP7",
           "C1"
+        ]
+      },
+      {
+        "id": "FM5",
+        "name": "Re-identification failure under partial coverage",
+        "definition": "A model splits one continuously-visible physical object into two or more distinct 'entities' as the visible fragment of that object changes shape, size, or completeness (e.g. due to a hand partially covering it), despite the object never leaving the frame or being fully occluded at any point. Distinct from FM1-FM4 (which concern confidence trajectories and hindsight narration): FM5 is a perceptual/entity-tracking failure, not a confidence or narration failure. Also distinct from the REPL-006/007/008 perceptual-drift pattern (where JANUS's visual grounding succeeded by checking text claims against actual pixels) -- in FM5, individual frame-level reads may be locally accurate, but the model fails to infer that a new fragment is the same object seen earlier in fuller view.",
+        "literature": null,
+        "how_to_check": "Scored by comparing a run's object registry / final object-summary against direct human review of the source frames at the point of divergence (e.g. REPL-012's F055/F076/F086/F088 comparison), checking whether one physical object was logged as two or more distinct entities despite continuous visibility.",
+        "confound_risk": null,
+        "status_note": "First identified REPL-012 (2026-07-24), truvia.mov, SC-JANUS condition. N=1. Corrected from an earlier mischaracterization as 'occlusion' -- object was visible in every frame until leaving the table edge, never fully hidden.",
+        "related_ids": [
+          "H7",
+          "REPL-012"
         ]
       }
     ]
